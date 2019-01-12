@@ -1,0 +1,12 @@
+NYPD Motor Vehicle Collisions - This is a breakdown of every collision in NYC by location and injury. Can be downloaded here - https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95 or just search for NYPD crash data. There is an export option where you can get the CSV.  
+
+
+Files:  
+Kibana Dev Tools commands – nypd_devTools.txt  
+Logstash conf – nypd_csv.conf  
+
+Notes:  
+Some of the hours that started with 00 did not seem to parse correctly but instead parsed to 20. Not sure why at this point.  
+There appears to be missing geo data. When Logstash is running there are errors about Longitude must be a number.  
+There were almost 900K hits parsed into Elasticsearch so a fairly good sample.  
+Use Last 5 Years in the Kibana time picker to get the most out of it.  

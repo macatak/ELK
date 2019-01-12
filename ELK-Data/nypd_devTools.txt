@@ -1,0 +1,30 @@
+get _cat/indices/nypd_crash
+
+DELETE nypd_crash
+
+get _template/nypd*
+
+delete _template/nypd*
+
+POST _template/nypd_crash_template
+{
+  "index_patterns": ["nypd_crash"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "doc": {
+      "properties": {
+        "dts": {
+          "type": "date",
+          "format":"YYYY-MM-dd HH:mm"
+         },
+        "coordinates": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,29 @@
+get _cat/indices/chicago_crime_1year
+
+DELETE chicago_crime_1year
+
+get _template/chicago_crime_1*
+
+delete _template/chicago_crime_1*
+
+POST _template/chicago_crime_1year_template
+{
+  "index_patterns": ["chicago_crime_1year"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "doc": {
+      "properties": {
+        "dts": {
+          "type": "date",
+          "format":"YYYY-MM-dd HH:mm:ss aa"
+         },
+        "coordinates": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}

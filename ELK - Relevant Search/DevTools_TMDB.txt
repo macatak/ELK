@@ -1,0 +1,37 @@
+# show the index info
+get _cat/indices/tmdb
+
+# delete it so you can easily redo it
+DELETE tmdb
+
+# get the template
+get _template/tmdb*
+
+#delete the template
+delete _template/tmdb*
+
+# template that (i I think) maps to the authors
+POST _template/tmdb_template
+{
+  "index_patterns": ["tmdb"],
+  "settings": {
+      "number_of_replicas": "0",
+      "number_of_shards": "1"
+  },
+  "mappings": {
+    "movie": {
+      "properties": {
+        "title": {
+          "type": "text",
+          "analyzer": "english"
+        },
+        "overview": {
+          "type": "text",
+          "analyzer": "english"
+        }
+      }
+    }
+  }
+
+}  
+  

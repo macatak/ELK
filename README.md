@@ -1,5 +1,5 @@
 # ELK
-ELK related projects
+ELK related projects combined into one project from the separate ones
 
 
 Repos  

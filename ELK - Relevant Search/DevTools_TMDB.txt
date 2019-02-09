@@ -2,7 +2,7 @@
 get _cat/indices/tmdb
 
 # delete it so you can easily redo it
-DELETE tmdb
+DELETE tmdb*
 
 # get the template
 get _template/tmdb*
@@ -10,7 +10,7 @@ get _template/tmdb*
 #delete the template
 delete _template/tmdb*
 
-# template that (i I think) maps to the authors
+# template that (I think) maps to the book
 POST _template/tmdb_template
 {
   "index_patterns": ["tmdb"],

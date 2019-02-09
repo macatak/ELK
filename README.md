@@ -3,7 +3,7 @@ ELK related projects combined into one project from the separate ones
 
 
 Repos  
-install-scripts - Linux-based (DEB and RPM) that wukk install the ELK stack plus Filebeats (version 6.2.4) along with a log file that will be parsed  
+install-scripts - Linux-based (DEB and RPM) that will install the ELK stack plus Filebeats (version 6.2.4) along with a log file that will be parsed  
 
 ELK-Data - How-To for importing large, publicly available data sets in ELK to take deeper dives into ELK's functions.  
 

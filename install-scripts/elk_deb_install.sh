@@ -82,7 +82,7 @@ sed -i "s|$strstrElasticsearchOrigOrig|$strstrElasticsearchNew|g" $path/$filenam
 #strPathNew='    - /home/*.log'
 #sed -i "s|$strPortOrig|$strPortNew|g" $path/$filename
 # changing path to a location where there should't be any log files
-# Not really needed but this way it won't atart parsing anything we don't want
+# Not really needed but this way it won't start parsing anything we don't want
 #sed -i "s|$strPathOrig|$strPathNew|g" $path/$filename
 
 

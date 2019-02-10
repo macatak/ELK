@@ -9,10 +9,14 @@
 # download/install/configure ELK + filebeat
 
 # get the packages
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.rpm
-wget https://artifacts.elastic.co/downloads/logstash/logstash-6.2.4.rpm
-wget https://artifacts.elastic.co/downloads/kibana/kibana-6.2.4-x86_64.rpm
-wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.4-x86_64.rpm
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.rpm
+wget https://artifacts.elastic.co/downloads/logstash/logstash-6.5.4.rpm
+wget https://artifacts.elastic.co/downloads/kibana/kibana-6.5.4-x86_64.rpm
+wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.5.4-x86_64.rpm
+# wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.rpm
+# wget https://artifacts.elastic.co/downloads/logstash/logstash-6.2.4.rpm
+# wget https://artifacts.elastic.co/downloads/kibana/kibana-6.2.4-x86_64.rpm
+# wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.4-x86_64.rpm
 
 # download some basic configuration files
 wget https://github.com/macatak/ELK/blob/master/install-scripts/LS_beats.conf
@@ -20,10 +24,14 @@ wget https://github.com/macatak/ELK/blob/master/install-scripts/basicFilebeat.ym
 wget https://github.com/macatak/ELK/blob/master/install-scripts/bodgeit_access.log
 
 # install the packages
-rpm -ivh elasticsearch-6.2.4.rpm
-rpm -ivh logstash-6.2.4.rpm
-rpm -ivh kibana-6.2.4-x86_64.rpm
-rpm -ivh filebeat-6.2.4-x86_64.rpm
+# rpm -ivh elasticsearch-6.2.4.rpm
+# rpm -ivh logstash-6.2.4.rpm
+# rpm -ivh kibana-6.2.4-x86_64.rpm
+# rpm -ivh filebeat-6.2.4-x86_64.rpm
+rpm -ivh elasticsearch-6.5.4.rpm
+rpm -ivh logstash-6.5.4.rpm
+rpm -ivh kibana-6.5.4-x86_64.rpm
+rpm -ivh filebeat-6.5.4-x86_64.rpm
 
 # backup the YML's
 cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.orig

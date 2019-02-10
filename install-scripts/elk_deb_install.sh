@@ -9,10 +9,6 @@
 # download/install/configure ELK + filebeat
 
 # get the packages
-# wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.deb
-# wget https://artifacts.elastic.co/downloads/logstash/logstash-6.2.2.deb
-# wget https://artifacts.elastic.co/downloads/kibana/kibana-6.2.2-amd64.deb
-# wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.2-amd64.deb
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.deb
 wget https://artifacts.elastic.co/downloads/logstash/logstash-6.5.4.deb
 wget https://artifacts.elastic.co/downloads/kibana/kibana-6.5.4-amd64.deb

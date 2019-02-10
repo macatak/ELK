@@ -15,9 +15,9 @@ wget https://artifacts.elastic.co/downloads/kibana/kibana-6.2.4-x86_64.rpm
 wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.4-x86_64.rpm
 
 # download some basic configuration files
-wget https://raw.githubusercontent.com/macatak/ELK-Install-scripts/master/LS_beats.conf
-wget https://raw.githubusercontent.com/macatak/ELK-Install-scripts/master/basicFilebeat.yml
-wget https://raw.githubusercontent.com/macatak/ELK-Install-scripts/master/bodgeit_access.log
+wget https://github.com/macatak/ELK/blob/master/install-scripts/LS_beats.conf
+wget https://github.com/macatak/ELK/blob/master/install-scripts/basicFilebeat.yml
+wget https://github.com/macatak/ELK/blob/master/install-scripts/bodgeit_access.log
 
 # install the packages
 rpm -ivh elasticsearch-6.2.4.rpm

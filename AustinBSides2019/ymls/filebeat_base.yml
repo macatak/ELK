@@ -1,0 +1,24 @@
+###################### Filebeat Configuration Example #########################
+
+# minimal config
+
+filebeat.inputs:
+
+# type options are log, stdin, redis, udp, tcp, docker, syslog, netflow
+- type: log
+  enabled: true
+  paths:
+    # wildcards are supported like *.log  
+    - /home/bikeride/sample_logs/access_5.log
+  fields:
+    target_index: test
+    
+
+#================================ Outputs =====================================
+#----------------------------- Logstash output --------------------------------
+#output.logstash:
+  # The Logstash hosts
+  #hosts: ["localhost:5044"]
+#------------------------------ Console output --------------------------------
+output.console:
+  pretty: true

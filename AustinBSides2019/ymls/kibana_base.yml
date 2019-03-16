@@ -1,0 +1,16 @@
+# Kibana is served by a back end server. This setting specifies the port to use.
+server.port: 5601
+
+# Specifies the address to which the Kibana server will bind.
+server.host: "localhost"
+
+# The URL of the Elasticsearch instance to use for all your queries.
+elasticsearch.url: "http://localhost:9200"
+
+# clean up the interface
+# not required
+xpack.apm.ui.enabled: false
+xpack.apm.enabled: false
+xpack.ml.enabled: false
+xpack.graph.enabled: false
+ 

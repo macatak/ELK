@@ -1,1 +1,1 @@
-Basic Elasticsearch and Kibana YML files
+Basic Elasticsearch, Kibana, and Filebeat YML files

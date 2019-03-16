@@ -9,8 +9,7 @@ elasticsearch.url: "http://localhost:9200"
 
 # clean up the interface
 # not required
-xpack.apm.ui.enabled: false
-xpack.apm.enabled: false
-xpack.ml.enabled: false
-xpack.graph.enabled: false
- 
+#xpack.apm.ui.enabled: false
+#xpack.apm.enabled: false
+#xpack.ml.enabled: false
+#xpack.graph.enabled: false

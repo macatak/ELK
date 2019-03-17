@@ -1,6 +1,8 @@
 # ELK
 ELK related projects combined into one project from the separate ones
 
+AustinBSides2019  
+Material for a 4 hour BSides Training
 
 Repos  
 install-scripts - Linux-based (DEB and RPM) that will install the ELK stack plus Filebeats (version 6.2.4) along with a log file that will be parsed  

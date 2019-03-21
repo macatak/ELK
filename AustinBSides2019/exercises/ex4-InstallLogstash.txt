@@ -1,0 +1,16 @@
+Exercise 4 : Logstash Setup
+
+Run the logstash installer if you have not already
+    RPM
+        rpm -ivh logstash*.rpm
+    DEB
+
+Create a folder named ‘sample_logs’ in your home directory.
+
+Copy all the repo /SampleLogs/*.log files from GitHub into that folder
+
+Create a /etc/logstash/conf_files folder
+    mkdir /etc/logstash/conf_files
+    
+Copy all the *.conf files from GitHub /LogstashConfFiles/into /etc/logstash/conf_files
+    cp *.conf /etc/logstash/conf_files/*.* 

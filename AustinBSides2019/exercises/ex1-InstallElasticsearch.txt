@@ -1,0 +1,23 @@
+exercise 1
+
+Run the Elasticsearch installer if you have not already
+    RPM
+        rpm -ivh elasticsearch*.rpm
+    DEB
+        dpkg -i elastic*.deb
+
+Back up the /etc/elasticsearch.yml file.
+    mv etc/elasticsearch.yml elasticsearch.yml.orig
+
+Copy the repo’s /ymls/elasticsearch_base.yml to /etc/elasticsearch
+    cp elasticsearch_base.yml /etc/elasticsearch/elasticsearch.yml
+
+Enable the service
+    systemctl daemon-reload
+    systemctl enable elasticsearch
+
+Start the elasticsearch service
+    systemctl start elasticsearch
+
+Check to see if it’s running
+http://localhost:9200/

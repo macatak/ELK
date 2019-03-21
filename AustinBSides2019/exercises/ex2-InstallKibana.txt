@@ -1,0 +1,23 @@
+exercise 2
+
+Run the Kibana installer if you have not already
+    RPM
+        rpm -ivh kibana*.rpm
+    DEB
+        dpkg -i kibana*.deb
+
+Back up the /etc/kibana.yml file.
+    mv etc/kibana/kibana.yml /etc/kibana/kibana.yml.orig
+
+Copy the repo’s /ymls/kibana_base.yml to /etc/kibana
+    cp kibana_base.yml /etc/kibana/kibana.yml
+
+Enable the service
+    systemctl daemon-reload
+    systemctl enable kibana
+
+Start the kibana service
+    systemctl start kibana
+
+Check to see if it’s running
+http://localhost:5601/

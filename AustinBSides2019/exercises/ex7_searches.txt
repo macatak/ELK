@@ -1,0 +1,41 @@
+Exercise 7 : Searches
+
+Write the following searches on the Chiago Crime data base (answers below and there's more than 1 correct answer)
+
+1 - How many criminal trespass were there in a hospital or restaurant 
+2 - How many possesion arrests were there on a sidewalk?
+3 - How many home invasions secondary descriptions where the primary desciption is not burglary
+4 - Return any primary description that contains a 'b' or 'c'
+5 - How many homicides or assaults happened in a Factory?
+6 - How many liquor law violations were there in a bar but not a restaurant where there was no arrest made?
+7 - How many retail thefts resulting in an arrest happened at a gas station where the location is any avenue on Beats 1000 to 2000
+8 - How many Battery or Assualt arrests occured at any kind of store that involved a handgun or fraud
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Answers
+1 - PRIMARY_DESCRIPTION:"CRIMINAL TRESPASS" AND (LOCATION_DESCRIPTION:restaurant OR LOCATION_DESCRIPTION:hospital*)
+2 - +SECONDARY_DESCRIPTION:POSS* +LOCATION_DESCRIPTION:"sidewalk"
+3 - SECONDARY_DESCRIPTION:HOME INVASION NOT PRIMARY_DESCRIPTION:BURGLARY
+4 - PRIMARY_DESCRIPTION:*?b*?c*
+5 - PRIMARY_DESCRIPTION:homicide PRIMARY_DESCRIPTION:ASSAULT +LOCATION_DESCRIPTION:FACTORY
+6 - +PRIMARY_DESCRIPTION:"LIQUOR LAW VIOLATION" AND  LOCATION_DESCRIPTION:bar NOT LOCATION_DESCRIPTION:rest* AND ARREST:N
+7 - +SECONDARY_DESCRIPTION:"retail theft" BLOCK:ave +LOCATION_DESCRIPTION:"GAS STATION" BEAT:[1000 TO 2000] AND ARREST:Y
+8 - (PRIMARY_DESCRIPTION:"battery"  OR PRIMARY_DESCRIPTION:"assault") AND  LOCATION_DESCRIPTION:store AND (SECONDARY_DESCRIPTION:handgun OR SECONDARY_DESCRIPTION:fraud)
+

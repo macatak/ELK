@@ -1,0 +1,25 @@
+Exercise 6 : H2G2 Parser
+
+There are a few ways to do this 
+
+The disssect part of the Filter portion looks like this:
+
+filter {
+   # dissect parser
+   dissect {
+      mapping => {
+        'message' => '%{source} - "%{quote}"'
+      }
+   }
+
+
+Add a key:values based on a field value 
+    This would also go into the Filter section
+
+   # set Arthur's attributes
+   if [source] == "arthur" {
+     mutate {
+        add_field => [ "home_planet", "earth" ]
+        add_field => [ "occupation", "radio" ]
+     }
+   }

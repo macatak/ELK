@@ -1,0 +1,13 @@
+Exercise 5 : Logstash Grok for the UofS.log file
+
+Complete Grok pattern per the online tester
+
+%{NOTSPACE:requestor} - - \[%{HTTPDATE:dts}\] \"%{WORD:http_method} \/%{GREEDYDATA:resource}\" %{INT:response_code} %{NUMBER:bytes_returned}
+
+Complete Filter section
+
+filter {
+   grok {
+      match => { "message" => "%{NOTSPACE:requestor} - - \[%{HTTPDATE:dts}\] \"%{WORD:http_method} \/%{GREEDYDATA:resource}\" %{INT:response_code} %{NUMBER:bytes_returned}" }
+    }
+}

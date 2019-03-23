@@ -1,0 +1,75 @@
+Searches are entered on the Search/Query bar in the Kibana Discover tab
+Results returned are based on the search results and the time period selection
+    NOTE - Visualizations and Dashboards are also reflective of the time period
+Searches are not case sensitive
+
+The main thing to notice is the number of hits returned and what is highlighted
+
+Search Types
+    Use the Chicago Crime index for the examples
+
+Free Text search
+    Type anything in the search bar
+    Any match in any filed will be returned
+    Example - small retail store
+    
+Term search is a word
+    Example - retail
+    
+Phrase search is a phrase that must be matched denoted by enclosing in double quotes
+    Example (not a phrase)
+        SMALL RETAIL STORE (note the number of hits ~19K)
+    Example (phrase)
+        "SMALL RETAIL STORE" (note the number of hits ~7K)
+
+Field searches
+    Fields are access using the syntac fieldName: search value
+    NOTE: Many key names are similar like WARD and WARD.keyword. Either can be used in a search
+    NOTE: Field names must be capatilized
+    Examples 
+        WARD:42
+        WARD.keyword: 42 (space between them will work but you should be consisent)
+           
+Wildcards
+    Wildcards, represented by an *,  can be used
+    NOTE - These are computationally expensive, use with care
+    Example - P*
+
+Logical Operators
+    AND and OR (must be uppercase). Tey can be used on their own or combined (like a math equation)
+    Simple Examples
+        small OR retail OR store
+        small AND retail AND store (the hits being the same as the phrase search is a limitation of the data set)
+        "small retail store" NOT WARD:42
+    Complex
+        "small retail store" NOT (WARD:42 OR WARD:8 OR ward:14)
+    
+MUST MATCH (+) and MUST NOT MATCH (-)
+    + and - mean the term or phrase must be found or must not be found
+    Examples
+        small +retail +store - Must have 'retail and 'store' can may have small
+        +small +retail +store - Logically the same as "small retail store"
+
+Range searches
+    Syntax (where val1 is the start and val2 is the end)
+    NOTE - Exclusive only seems to work on certain fields
+        Works on Ward, not on Primary/Secondary Descriptions, both are string types but Ward is a number
+        
+    Inclusive uses []
+        FILEDNAME: [val1 TO val2]
+        Example
+            PRIMARY_DESCRIPTION:[B TO D]
+  
+    Exclusive uses {}
+        FILEDNAME: {val1 TO val2}
+        Example
+            PRIMARY_DESCRIPTION:{B TO D}
+
+Regex
+NOTE - Regex's are computationally expensive, only use them when you have to
+    uses the ? to denotes zero or one match
+    Example - SECONDARY_DESCRIPTION:C?r*
+    Matches CREDIT CARD FRAUD, ILLEGAL USE CASH CARD, ABUSE/NEGLECT: CARE FACILITY, etc
+    
+   
+    

@@ -1,0 +1,18 @@
+ELK Stack
+    Elasticsearch - https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.rpm
+    Logstash - https://artifacts.elastic.co/downloads/logstash/logstash-6.6.1.rpm
+    Kibana - https://artifacts.elastic.co/downloads/kibana/kibana-6.6.1-x86_64.rpm
+    Filebeat - https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.6.1-x86_64.rpm
+
+GitHub Repo
+    Clone - https://github.com/macatak/ELK/tree/master/AustinBSides2019
+
+
+Chicago Crime 1 Year
+    https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD
+    
+Lucene Query Parser Syntax
+    https://lucene.apache.org/core/2_9_4/queryparsersyntax.html
+
+Elasticsearch Query DSL
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html

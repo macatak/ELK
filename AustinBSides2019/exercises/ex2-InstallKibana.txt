@@ -1,5 +1,7 @@
 exercise 2
 
+NOTE - Assumes RPM's and install files are in the same folder
+
 Run the Kibana installer if you have not already
     RPM
         rpm -ivh kibana*.rpm
@@ -7,7 +9,7 @@ Run the Kibana installer if you have not already
         dpkg -i kibana*.deb
 
 Back up the /etc/kibana.yml file.
-    mv etc/kibana/kibana.yml /etc/kibana/kibana.yml.orig
+    mv /etc/kibana/kibana.yml /etc/kibana/kibana.yml.orig
 
 Copy the repo’s /ymls/kibana_base.yml to /etc/kibana
     cp kibana_base.yml /etc/kibana/kibana.yml

@@ -1,0 +1,10 @@
+Elasticsearch DSL
+
+See the link for more details, this is not user friendly but useful for validating Python queries
+
+Find everything where there was an arrest
+    {"bool":{"must":[{"match":{"ARREST":"Y"}}]}}
+    
+Find everything where was an arrest and the secondary description simple
+    {"bool":{"must":[{"match":{"ARREST":"Y"}},{"match":{"SECONDARY_DESCRIPTION":"SIMPLE"}}]}}
+

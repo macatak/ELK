@@ -7,7 +7,7 @@ Run the Elasticsearch installer if you have not already
         dpkg -i elastic*.deb
 
 Back up the /etc/elasticsearch.yml file.
-    mv etc/elasticsearch.yml elasticsearch.yml.orig
+    mv /etc/elasticsearch.yml elasticsearch.yml.orig
 
 Copy the repo’s /ymls/elasticsearch_base.yml to /etc/elasticsearch
     cp elasticsearch_base.yml /etc/elasticsearch/elasticsearch.yml

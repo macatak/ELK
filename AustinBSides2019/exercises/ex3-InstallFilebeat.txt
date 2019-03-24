@@ -1,5 +1,7 @@
 exercise 3
 
+NOTE - Assumes RPM's and install files are in the same folder
+
 Run the filebeat installer if you have not already
     RPM
         rpm -ivh filebeat*.rpm
@@ -7,7 +9,7 @@ Run the filebeat installer if you have not already
         dpkg -i filebeat*.deb
 
 Back up the /etc/filebeat/filebeat.yml file.
-   mv etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.orig
+   mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.orig
 
 Copy the repo’s /ymls/filebeat_base.yml to /etc/filebeat
     cp filebeat_base.yml /etc/filebeat/filebeat.yml

@@ -1,5 +1,7 @@
 exercise 1
 
+NOTE - Assumes RPM's and install files are in the same folder
+
 Run the Elasticsearch installer if you have not already
     RPM
         rpm -ivh elasticsearch*.rpm

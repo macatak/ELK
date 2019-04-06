@@ -1,6 +1,9 @@
 # ELK
 ELK related projects combined into one project from the separate ones
 
+Logstash 101  
+Info on Logstash, how to run it from the command line, and an attempt to cover some of the options via plugins and codecs.  
+
 AustinBSides2019  
 Material for a 4 hour BSides Training
 

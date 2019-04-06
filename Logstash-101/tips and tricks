@@ -1,0 +1,21 @@
+Most syntax errors are due to missing curly braces. I recommend using the Atom IDE available here:  
+https://atom.io/  
+
+Install the Logstash (and Elasticsearch while you are doing it) package. Atom will autocomplete closing braces and other things for you. It will help a lot in this area because large conf files can are not a lot of fun to troubleshoot.  
+
+No output from Logstash usually means no input. Whether the input is a file (check the path), Beat (make sure it's running) or other feed.  
+
+Developing conf files  
+Using the file input and stdout output is the best way to go when devloping conf files. See the examples in this repo.  
+The only real requirement is the sample log file you are using contains all the different log entry formats that you will see coming in.  
+
+Break your conf files up into smaller ones and number them with the inputs being firsts, filters second, and outputs last.  
+Examples:  
+  100-beat_input.conf
+  101-syslog_input.conf
+  200-apache_access.conf
+  201-weblogic.conf
+  300-stdout_output.conf
+  301-elastichsearch_output.conf  
+  
+In the real world this will make life much easier on a number of levels.

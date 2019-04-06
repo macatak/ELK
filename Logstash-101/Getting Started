@@ -1,0 +1,9 @@
+You do not need to install Logstash to learn it. Just download the GZ or ZIP file and extract the contents.I have yet to hit any version issues so just go gret the latest version. You can download the file of your choice here:  
+https://www.elastic.co/downloads/logstash  
+
+Provided examples will used the installed version with the following default paths:  
+Executable - /usr/share/logstash/bin/  
+Sample logs - /home/bikeride/log_samples/
+Conf files - /etc/logstash/conf_files  
+
+You will have to update your paths accordingly

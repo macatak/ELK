@@ -7,3 +7,30 @@ Sample logs - /home/bikeride/log_samples/
 Conf files - /etc/logstash/conf_files  
 
 You will have to update your paths accordingly
+
+
+Conf file syntax check  
+This will check the syntax only of the file, it does not mean it will work as expected  
+
+  Syntax  
+  /usr/share/logstash/bin/logstash -f <conf file> -t  
+  
+  Example  
+  /usr/share/logstash/bin/logstash -f /etc/logstash/conf_files/grok_101.conf -t
+
+It does take a few seconds to run. There will be some warnings that yo can ignore.  
+The output we care about is at the bottom. 
+Pass  
+  Configuration OK  
+  [INFO ] 2019-04-06 16:43:18.590 [LogStash::Runner] runner - Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash  
+Fail example  
+  [FATAL] 2019-04-06 16:48:32.808 [LogStash::Runner] runner - The given configuration is invalid. Reason: Expected one of #, => at line 11, column 9 (byte 193) after input {  
+
+
+Running from a command line  
+The syntax is the same, just remove the '-t' from the end  
+  Syntax  
+  /usr/share/logstash/bin/logstash -f <conf file>
+  
+  Example  
+  /usr/share/logstash/bin/logstash -f /etc/logstash/conf_files/grok_101.conf

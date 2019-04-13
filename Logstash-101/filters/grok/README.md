@@ -6,6 +6,8 @@ How they do it - Parser is based on RegEx patterns and custom RegEx.
 
 Why it is useful - You can build a parser for most any event pattern.
 
+About the conf file - Parses the access_5.log in sample logs and outputs to the console
+
 Other Info:  
 Although grok is probably the most popular filter a dissect filter is a better option. Dissect is less resource intensive since it does not use RegEx. Advice is to use grok only if dissect will not work. Also dissect and grok can be used together.  
 

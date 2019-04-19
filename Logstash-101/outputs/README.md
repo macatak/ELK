@@ -9,4 +9,4 @@ out_es_basic.conf - Standard Elasticsearch output, OK for learning and developin
 out_es_index.conf - Send to a specific index in Elasticsearch, the more you learn the more useful this will become  
 
 out_es_variable.conf - Destination index is determied by logic. 
-NOTE - This file assumes the vairable (field name or metadata) exists
+NOTE - This file assumes the variable (field name or metadata) exists

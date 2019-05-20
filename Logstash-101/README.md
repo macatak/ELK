@@ -6,10 +6,8 @@ Tips and tricks - Things that will help when working on Logstash conf files
 To-Do  
   
 Filters  
-Grok  
-Dissect 
 Mutate  
-Translate  
+Translate   
 more to come  
 
 

@@ -8,3 +8,5 @@ How they do it - Creates a patern that matches the timestamp in the log
 Why it is useful - The default timestamp in Elasticsearch is when Logstash processed the event. A more useful timestamp is the timestamp in the log. By default the date filter will replace the @timestamp field
 
 About the conf file - Just a snippet, no input or output. It removes the original timestamp field since it is now redundant
+
+Pick the filter that matches your date

@@ -4,7 +4,7 @@ Manning Relevant search book
 BETA!!!!  
 AS IN BROKEN!!!  
 
-Update 9/3/19 - Came back to this effort for s few different reasons. Figured out a few things that were wrong. Still a work in progess but did make progess. Template is a bust but maybe not needed. At least could duplicate some results in the book.
+Update 9/3/19 - Came back to this effort for a few different reasons. Figured out a few things that were wrong. Still a work in progess but did make progess. Template is a bust but maybe not needed. At least could duplicate some results in the book.
 
 
 

@@ -10,7 +10,7 @@ Update 9/3/19 - Came back to this effort for a few different reasons. Figured ou
 
 
 Issues with TMDB import  
-This is just broken due to being done on Elasticsearch 2.0. Version 7.3.1 is lates (as of when I wrote this). wat too many breaking changes to work on 2.0. Books Jupyter notebook will never work.
+This is just broken due to being done on Elasticsearch 2.0. Version 7.3.1 is latest (as of when I wrote this). Way too many breaking changes to work on 2.0. Book's Jupyter notebook will never work.
 
 
 Issues with the index template  

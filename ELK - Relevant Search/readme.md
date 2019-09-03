@@ -4,10 +4,9 @@ Manning Relevant search book
 BETA!!!!  
 AS IN BROKEN!!!  
 
-Update 01/21/19 - Did a Python 3 script that will pull down the movie info into a file. The tmdb_json.conf file can be used as a Logstash conf file to send to Elasticsearch. Not sure if this will work 100% but it's a start. You don't need to install logstash, just download the ZIP. To run the conf file edit the file path and name to match what you have and run this command:
-/usr/share/logstash/bin/logstash -f tmdb_json.conf 
+Update 9/3/19 - Came back to this effort for s few different reasons. Figured out a few things that were wrong. Still a work in progess but did make progess. Template is a bust but maybe not needed. At least could duplicate some results in the book.
 
-You can comment out the Elasticsearch output to test it.
+
 
 Started this book and didnt get very far due to issues starting in Chapter 3. Decided to get back to it and figure out the issues like try to make the code work with Python 3 (code in the book is Python 2), add some error checking in the code since when it fails you have no idea that it didn't work right, and figure out the other issues due to some of the dated commands which are for Elasticsearch 2.0
 
@@ -16,4 +15,4 @@ Never could get the Jupyter notebook import to work. The book approach with a bu
 
 
 Issues with the index template  
-Index template provided is not longer supported (uses a string type which is now text type) so redid the Index template. See DevTools.txt for the command
+fixed by not using a template, may come back to haunt me :)

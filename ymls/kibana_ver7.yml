@@ -1,0 +1,11 @@
+# Kibana is served by a back end server. This setting specifies the port to use.
+server.port: 5601
+
+# Specifies the address to which the Kibana server will bind. IP addresses and host names are both 
+server.host: "10.0.2.15"
+
+# elasticsearch host
+elasticsearch.hosts: ["http://10.0.2.15:9200"]
+
+# enable timelion
+timelion.ui.enabled: true

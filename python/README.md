@@ -1,1 +1,1 @@
-python scripts for ELK
+Duplicated in Python-Elasticsearch-API

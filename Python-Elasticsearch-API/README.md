@@ -11,7 +11,7 @@ API link _https://elasticsearch-py.readthedocs.io/en/master/api.html_
 
 ## Index API
 - Contans basic index operations
-- opn, clode, create, delete, check exists, flush, force merge, refresh, shard store info, segment info, shrink (in progress), operations status.  
+- open, close, create, delete, check exists, flush, force merge, refresh, shard store info, segment info, shrink (in progress), operations status.  
 
 
 

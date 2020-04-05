@@ -10,6 +10,6 @@
 - 3 node with Kibana
 - Open Distro (complete open source) license
 
-Operation
-Rename the file to docker-compose.yml
-Run "docker-compose up
+Operation  
+1 - Rename the file to docker-compose.yml  
+2 - Run "docker-compose up

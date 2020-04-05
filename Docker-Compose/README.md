@@ -6,7 +6,7 @@
 - 3 node with Kibana
 - Elastic basic license
 
-#### compose_3es_OpenDistro
+#### compose_3ES_OpenDistro
 - 3 node with Kibana
 - Open Distro (complete open source) license
 

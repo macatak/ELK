@@ -12,4 +12,4 @@
 
 Operation  
 1 - Rename the file to docker-compose.yml  
-2 - Run "docker-compose up
+2 - Run "docker-compose up"

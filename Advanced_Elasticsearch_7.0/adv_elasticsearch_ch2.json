@@ -1,0 +1,1338 @@
+{
+	"info": {
+		"_postman_id": "d4c5c151-6a95-4873-ba56-ef487b74b9c5",
+		"name": "adv_elasticsearch_ch2",
+		"description": "Elasticsearch requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "crud",
+			"item": [
+				{
+					"name": "analayze",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"The quick brown fox jumps over the log\"\n}"
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_index",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_index_exists",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf"
+							]
+						},
+						"description": "sponse body contains three parts of the index, which are aliases , mappings , and setting"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "close_index",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf/_close",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf",
+								"_close"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "open_index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "index_settings",
+			"item": [
+				{
+					"name": "get_settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf/_settings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf",
+								"_settings"
+							]
+						},
+						"description": "retrieve index/indices settings.\nThe default settings includes index creation date, creation_date ; the number of shards, number_of_shards, the number of replicas number_of_replicas, uuid, the Elasticsearch version ID; and the given index name, provided_name"
+					},
+					"response": []
+				},
+				{
+					"name": "update_replica_count",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"index\": {\n\t\t\"number_of_replicas\": 3\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf/_settings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf",
+								"_settings"
+							]
+						},
+						"description": "set number of replicas from 1 to 2\nIndex has to be closed"
+					},
+					"response": []
+				},
+				{
+					"name": "update_settings_to_default",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"index\": {\n\t\t\"number_of_replicas\": null\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/ct_etf/_settings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"ct_etf",
+								"_settings"
+							]
+						},
+						"description": "Use 'null' \nIndex has to be closed"
+					},
+					"response": []
+				},
+				{
+					"name": "create_index_template",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"index_patterns\": [\"cf_etf*\"],\n    \"settings\": {\n    \t\"number_of_replicas\": 2,\n        \"codec\": \"best_compression\"\n        }\n}"
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_template/cf_etf_template",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_template",
+								"cf_etf_template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_index_template",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/_template/cf_etf_template",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_template",
+								"cf_etf_template"
+							]
+						},
+						"description": "in the response thaere is called orderthat shows the order ranking in which multiple matching templates are merged. The lower order applies first and the higher order overrides them."
+					},
+					"response": []
+				},
+				{
+					"name": "create_index_alias",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_alias/cf_etf_1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_alias",
+								"cf_etf_1"
+							]
+						},
+						"description": "The index aliases API allows you to create another name for an index or multiple indices and then use it as an alternative name in an index operation.\n\nbenefits:\nRe-indexing with zero downtime\nGrouping multiple indices\nViews on a subset of documents"
+					},
+					"response": []
+				},
+				{
+					"name": "get_index_alias_info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_alias/cf_etf_1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_alias",
+								"cf_etf_1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_index_alias_exists",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_alias/cf_etf_1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_alias",
+								"cf_etf_1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_index_alias",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_alias/cf_etf_1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_alias",
+								"cf_etf_1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The index settings are divided into per-index level and global level.\n\nGlobal-level settings manage the settings for all indices rather than configuring them one by one. Global-level index settings include circuit breakers, field data caches, node query caches, indexing buffers, shard request caches, and recovery. They are controlled by the indices module.\n\nper-index level settings are controlled by index modules. \nPer-index level settings are distinguished as static and dynamic. \nStatic settings can only be set when the index is created or on a closed index\nDynamic settings can be changed on the live index.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d500f733-9e39-434c-ba2d-7b8e30992c29",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4ffa8e7-f37c-4d3e-b64c-3252b103701c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "index_alias",
+			"item": [
+				{
+					"name": "add_index_large",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_large",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_large"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_index_medium",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_medium",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_medium"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_index_small",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_small",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_small"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_index_others",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_others",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_others"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_alias",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf*/_alias/cf_etl_alias",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf*",
+								"_alias",
+								"cf_etl_alias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_alias_info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf*/_alias/cf_etl_alias",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf*",
+								"_alias",
+								"cf_etl_alias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reindexing_with_zero_downtime_by_aliases",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"actions\" : [\n\t\t{\"remove\": {\"index\":\"cf_etf\", \"alias\":\"cf_etf_production\"}},\n\t\t{\"add\": {\"index\": \"cf_etf_new\", \"alias\": \"cf_etf_production\"}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_aliases",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_aliases"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "create a few indices to search common fields on",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "filtered_alias",
+			"item": [
+				{
+					"name": "1-Add_index",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"properties\": {\n\t\t\t\"symbol\": {\"type\": \"keyword\"},\n\t\t\t\"category\": {\"type\": \"keyword\"}\n\t\t}\n\t}\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view"
+							]
+						},
+						"description": "Create a new index, cf_view , with a mapping to tell Elasticsearch that the symbol and category fields are using the keyword datatype"
+					},
+					"response": []
+				},
+				{
+					"name": "add_doc1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"symbol\":\"ACWF\", \"category\":\"Equity\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_doc2",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"symbol\":\"ACWI\", \"category\":\"International\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_filter_alias",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"actions\":[\n\t\t{\n\t\t\t\"add\":{\n\t\t\t\t\"index\":\"cf_view\", \"alias\":\"cf_view_international\",\n\t\t\t\t\"filter\":{\n\t\t\t\t\t\"term\":{\"category\":\"International\"}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_aliases",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_aliases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search_filtered_alias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view_international/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view_international",
+								"_search"
+							]
+						},
+						"description": "will search only on this\n\"term\":{\"category\":\"International\"}"
+					},
+					"response": []
+				},
+				{
+					"name": "search_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "Brings back everything"
+					},
+					"response": []
+				}
+			],
+			"description": "Views on a subset of documents\n\nIn a SQL database, a view is a SQL statement that is stored in the database using a name.\n\nIn Elasticsearch, a filtered alias provides a similar capability to access a subset of documents\nfrom the underlying indices.\n\nensure that the X field already exists in the index mapping, then you can create an alias that uses the\nfilter on the X field.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5deb0afb-1c8b-43d8-bfe6-01bc571bf1ee",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8bc8c46-dba7-43f4-bd66-1a5b20cf008c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "monitoring",
+			"item": [
+				{
+					"name": "node_stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_stats/",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_stats",
+								""
+							]
+						},
+						"description": "The primaries field reports aggregation in the scope of the primary shards\n\ntotal field is the cumulative values in both shard types.\n\nfull details here\nhttps://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html"
+					},
+					"response": []
+				},
+				{
+					"name": "get_segment_info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_segments",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_segments"
+							]
+						},
+						"description": "provides low-level segment information for the Lucene index (shard level) that builds indices in the cluster"
+					},
+					"response": []
+				},
+				{
+					"name": "get_recovery_info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_recovery",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_recovery"
+							]
+						},
+						"description": "detailed information about the recovery status for the shards that builds indices"
+					},
+					"response": []
+				},
+				{
+					"name": "get_shard_strores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_shard_stores",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_shard_stores"
+							]
+						},
+						"description": "insight information about the stores for the shards that builds indices in the cluster"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "index_persistance",
+			"item": [
+				{
+					"name": "clear_cache_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_cache/clear?query=true",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_cache",
+								"clear"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Clear Cache: When Elasticsearch determines that a bitset is likely to be reused in the future, it will be cached directly in memory and reuse it as needed. This API allows you to clear all caches or specific caches such as query, request, and field data for one or more indices."
+					},
+					"response": []
+				},
+				{
+					"name": "clear_cache_request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_cache/clear?request=true",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_cache",
+								"clear"
+							],
+							"query": [
+								{
+									"key": "request",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clear_cache_fielddata",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_cache/clear?fielddata=true",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_cache",
+								"clear"
+							],
+							"query": [
+								{
+									"key": "fielddata",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh_operation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_refresh",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_refresh"
+							]
+						},
+						"description": "refresh operation, the in-memory buffer flushes the contents to a newly created segment and makes the new documents visible for searching."
+					},
+					"response": []
+				},
+				{
+					"name": "flush_operation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_flush",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_flush"
+							]
+						},
+						"description": "flush operation, the in-memory buffer is written to a new segment. Then, all of the existing in-memory segments are merged into the merged segment, and then written to disk. Finally, the translog is cleared"
+					},
+					"response": []
+				},
+				{
+					"name": "synced_flush_operation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_flush/synced",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_flush",
+								"synced"
+							]
+						},
+						"description": "Perform a normal flush operation and add sync_id to all the shards to avoid waiting for the default 5 minutes inactivity period to mark the\nindex as idle:"
+					},
+					"response": []
+				},
+				{
+					"name": "force_merge_operation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_forcemerge",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_forcemerge"
+							]
+						},
+						"description": "_forcemerge API allows you to reduce the number of segments by merging them together. This optimization can make the search operations faster"
+					},
+					"response": []
+				}
+			],
+			"description": "Elasticsearch solves the persistence in different ways. The transaction log, translog , and the temporary storage in-memory buffer are used during index operations. Later, the data in the in-memory buffer will move to a new segment. Finally, segments will be flushed to the disk storage. Methods for a few APIs that manage the persistent stage of the indexed data",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "advanced_index_management",
+			"item": [
+				{
+					"name": "split_operation_1_put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\":{\n\t\t\"index.blocks.write\": true\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_settings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_settings"
+							]
+						},
+						"description": "Transform an existing index into a new one while the original primary shard is split into two or more primary shards. The primary shards of the new index must be a factor of the original primary shard.\n1 - PUT -> set to readonly\n2 - POST -> split it"
+					},
+					"response": []
+				},
+				{
+					"name": "split_operation_2_post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\":{\n\t\t\"index.number_of_shards\": 4\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_split/cf_etf_split",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_split",
+								"cf_etf_split"
+							]
+						},
+						"description": "Transform an existing index into a new one while the original primary shard is split into two or more primary shards. The primary shards of the new index must be a factor of the original primary shard.\n1 - PUT -> set to readonly\n2 - POST -> split it"
+					},
+					"response": []
+				},
+				{
+					"name": "shrink_operation_1_put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\": {\n\t\t\"index.routing.allocation.require._name\":\"shrink_node_name\",\n\t\t\"index.blocks.write\": true\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_split/_settings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_split",
+								"_settings"
+							]
+						},
+						"description": "shrink an existing index into a new one with fewer primary shards.\nThe number of the primary shards of the new index must be a factor of the original primary shards. The steps are as follows:\n1. PUT - source index is marked as read-only using the index.blocks.write:true\n2. POST - shrink it"
+					},
+					"response": []
+				},
+				{
+					"name": "shrink_operation_2_post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\": {\n\t\t\"index.number_of_shards\": 2,\n\t\t\"index.routing.allocation.require._name\": null,\n\t\t\"index.blocks.write\": null\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_split/_shrink/cf_etf_shrink?copy_settings=true",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_split",
+								"_shrink",
+								"cf_etf_shrink"
+							],
+							"query": [
+								{
+									"key": "copy_settings",
+									"value": "true"
+								}
+							]
+						},
+						"description": "shrink an existing index into a new one with fewer primary shards.\nThe number of the primary shards of the new index must be a factor of the original primary shards. The steps are as follows:\n1. PUT - source index is marked as read-only using the index.blocks.write:true\n2. POST - shrink it"
+					},
+					"response": []
+				},
+				{
+					"name": "rollover_index_1_put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\": {\n\t\t\"rollover_alias\":{}\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/rollover-000001",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"rollover-000001"
+							]
+						},
+						"description": "Rollover index\nThis API request accepts a list of conditions and a single alias name that must be associated with only one index. If the existing index satisfies the specified conditions such as aging or capacity issues, then a new index will be created and the alias is switched to point to the new index\n1. PUT - create an index with an alias\n2. POST - rollover"
+					},
+					"response": []
+				},
+				{
+					"name": "rollover_index_2_post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/rollover_alias/_rollover",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"rollover_alias",
+								"_rollover"
+							]
+						},
+						"description": "Rollover index\nThis API request accepts a list of conditions and a single alias name that must be associated with only one index. If the existing index satisfies the specified conditions such as aging or capacity issues, then a new index will be created and the alias is switched to point to the new index\n1. PUT - create an index with an alias\n2. POST - rollover"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

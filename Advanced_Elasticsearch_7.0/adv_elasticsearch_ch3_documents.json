@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "bf281b91-e963-40a7-8703-874442554e9d",
+		"name": "adv_elasticsearch_ch3_documents",
+		"description": "Documner API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "single_document_ops",
+			"item": [
+				{
+					"name": "remove_documnet_byID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_single_doc-fixedID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"symbol\": \"ACWF\",\n\t\"fund_name\": \"iShares Edge MSCI Multifactor Global ETF\",\n    \"rating\": 3,\n    \"morningstar_category\": \"World Large Stock\",\n    \"category\": \"Equity\",\n    \"family\": \"iShares\",\n    \"market_cap\": \"large\",\n    \"description\": \"The investment seeks to track the investment results of the MSCI ACWI Diversified Multiple-Factor Index.\\\\n The fund generally will invest at least 90% of its assets in the component securities of the underlying index and in investments that have economic characteristics that are substantially identical to the component securities of the underlying index. The underlying index is designed to contain equity securities from the MSCI ACWI Index (the \\\\\\\"parent index\\\\\\\") that have high exposure to four investment style factors: value, quality, momentum and low size, while maintaining a level of risk similar to that of the parent index.\",\n    \"exchange\": \"NYSE Arca\" \n}\n\n ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_single_doc_generatedID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"symbol\": \"ACWI\",\n    \"fund_name\": \"iShares MSCI ACWI ETF\",\n    \"rating\": 3,\n    \"morningstar_category\": \"World Large Stock\",\n    \"category\": \"International\",\n    \"family\": \"iShares\",\n    \"market_cap\": \"large\",\n    \"description\": \"The investment seeks to track the investment results of the MSCI ACWI composed of large- and mid-capitalization developed and emerging market equities.\\\\n The fund generally will invest at least 90% of its assets in the component securities of the underlying index and in investments that have economic characteristics that are substantially identical to the component securities of the underlying index. The index is a free float-adjusted market capitalization index designed to measure the combined equity market performance of developed and emerging markets countries.\",\n    \"exchange\": \"NASDAQ Global Market\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_doc/",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_doc",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_document_byScript",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"script\": \"ctx._source.remove('market_cap')\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_document_byPatch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"doc\": {\n\t\t\"market_cap\": \"mid\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_document_exists",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve_partial_document_byID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_doc/1?_source=symbol,rating,category",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_doc",
+								"1"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "symbol,rating,category"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve_whole_document_byID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_view/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_view",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "multi_document_ops",
+			"item": [
+				{
+					"name": "retrieve_multiple_docs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://10.0.2.15:9200/sw_people/_mget",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"sw_people",
+								"_mget"
+							]
+						},
+						"description": "400 response w/ API. curl works"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "bulk_api",
+			"item": [
+				{
+					"name": "bulk_101",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"delete\": {\"_index\":\"cf_etf\", \"_id\":\"1\"}}\n\n{\"create\": {\"_index\":\"cf_etf\", \"_id\":\"1\"}}\n\n{\"symbol\": \"ACWF\", \"fund_name\": \"iShares Edge MSCI Multifactor Global ETF\", \"rating\": 3, \"morningstar_category\": \"World Large Stock\", \"category\": \"Equity\", \"family\": \"iShares\", \"market_cap\": \"large\", \"description\": \"The investment seeks to track the investment results of the MSCI ACWI Diversified Multiple-Factor Index.\\\\n The fund generally will invest at least 90% of its assets in the component securities of the underlying index and in investments that have economic characteristics that are substantially identical to the component securities of the underlying index. The underlying index is designed to contain equity securities from the MSCI ACWI Index (the \\\\\\\"parent index\\\\\\\") that have high exposure to four investment style factors: value, quality, momentum and low size, while maintaining a level of risk similar to that of the parent index.\",\"exchange\": \"NYSE Arca\"}\n\n{\"update\": {\"_index\":\"cf_etf\", \"_type\":\"_doc\", \"_id\":\"1\"}}\n\n{\"script\":\"ctx._source.remove('market_cap')\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_bulk",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_bulk"
+							]
+						},
+						"description": "same issues w/ newlines"
+					},
+					"response": []
+				},
+				{
+					"name": "update_by_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_update_by_query",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_update_by_query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_by_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\":{\n\t\t\"match\":{\"rating\":4}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_delete_by_query?conflicts=proceed",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_delete_by_query"
+							],
+							"query": [
+								{
+									"key": "conflicts",
+									"value": "proceed"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "reindex_api",
+			"item": [
+				{
+					"name": "copy_index_1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "copies the source index to the destination"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

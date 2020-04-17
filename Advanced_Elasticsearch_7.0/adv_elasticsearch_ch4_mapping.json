@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "bac654cb-c9e9-4f95-9825-73f289eebeed",
+		"name": "adv_elasticsearch_ch4_mapping",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "basic_mapping",
+			"item": [
+				{
+					"name": "create_default_mapping",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"dynamic_date_formats\": [\"yyyy/MM/dd\"]\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/default_mappings_index",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"default_mappings_index"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_doc_2_default_mapping",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"simple_string_value\": \"a string\",\n    \"string_w_date_value\": \"2019/02/07\",\n    \"string_w_floating_point_value\": \"1.11\",\n    \"string_w_integer_value\" : \"1\",\n    \"integer_value\": 1,\n    \"floating_piont_value\": 1.1,\n    \"json_object\" : {\"level_1\" : {\"level2_1\":\"a string\", \"level_2_2\":1, \"level_2_3\":1.11}},\n    \"array_of_integer\": [1, 2],\n    \"array_of_float\": [1.11, 2.22],\n    \"array_of_simple_string\": [\"ab\", \"cd\"],\n    \"array_of_integer_string\": [\"1\", \"2\"],\n    \"array_of_float_string\": [\"1.11\", \"2.22\"],\n    \"boolean_value\" : true,\n    \"null_value\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/default_mappings_index/_doc/1",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"default_mappings_index",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_custom_mapping",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n       \"mappings\": {\n        \"date_detection\": false,\n        \"numeric_detection\": true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/custom_mappings_index",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"custom_mappings_index"
+							]
+						},
+						"description": "turn off the detection of the date string value and turn on the detection of the numeric string."
+					},
+					"response": []
+				},
+				{
+					"name": "get_default_mapping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/default_mappings_index/_mappings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"default_mappings_index",
+								"_mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-custom_mapping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/custom_mappings_index/_mappings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"custom_mappings_index",
+								"_mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_default_mappings_index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/default_mappings_index/",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"default_mappings_index",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_default_mappings_index_dynamic_template",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"dynamic_templates\": [\n\t\t\t{\n\t\t\t\t\"integers_template\": {\n\t\t\t\t\t\"match_mapping_type\": \"long\",\n\t\t\t\t\t\"mapping\": {\"type\": \"integer\"}\n\t\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"field_name_template\" :{\t\t\t                                    \"match_mapping_type\": \"string\",\n\t\t\t\t    \"match\": \"*_simple_string\",\n                    \"mapping\": {\"type\": \"keyword\"}\n                    }\n            },\n            {\n            \t\"path_match_template\":{\n            \t\t\"path_match\": \"json_object.*.level_2_3\",\n                    \"mapping\": {\"type\": \"double\"}\n                }\n        }                    \n    ]\n}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/default_mappings_index",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"default_mappings_index"
+							]
+						},
+						"description": "Create three dynamic templates:\n\nintegers_template maps integer values to the integer type\ninstead of the long type\n\nfield_name_template matches any fields to the name ending with _simple_string , and maps to the keyword type instead of the text type\n\npath_match_template matches any fields with the dot path\njson_object.*.level_2_3 , and maps to the double type instead of the float type"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "metadata",
+			"item": [
+				{
+					"name": "basic_metadata_template",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"_meta\": {\n\t\t\t\"release\" : \"1.0\",\n\t\t\t\"version\": \"1\"\n\t\t\t},\n\t\t\t\"_routing\": {\n\t\t\t\t\"required\": true\n\t\t\t\t},\n\t\t\t\t\"_source\": {\n\t\t\t\t\t\"enabled\": false\n              }\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_toy",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_toy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_ctf",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_cf_etf_index_with_static_mapping",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"dynamic\": false,\n\t\t\"properties\": {\n\t\t\t\"symbol\": {\"type\": \"keyword\"},\n\t\t\t\"fund_name\": {\"type\": \"text\"},\n\t\t\t\"rating\": {\"type\": \"byte\"},\n\t\t\t\"morningstar_category\": {\"type\": \"keyword\"},\n\t\t\t\"category\": {\"type\": \"keyword\"},\n\t\t\t\"family\": {\"type\": \"keyword\"},\n\t\t\t\"market_cap\": {\"type\": \"keyword\"},\n\t\t\t\"description\": {\"type\": \"text\", \"fields\": {\"raw\": {\"type\":\"keyword\"}}}              \n\t\t\t}\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_cf_etf_index_with_static_mapping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_mappings",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_by_query_refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_update_by_query?refresh",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_update_by_query"
+							],
+							"query": [
+								{
+									"key": "refresh",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

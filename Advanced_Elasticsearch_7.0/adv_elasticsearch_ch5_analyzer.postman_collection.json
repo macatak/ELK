@@ -1,0 +1,1030 @@
+{
+	"info": {
+		"_postman_id": "d2e04975-b7ed-461a-aec3-4416dba3d910",
+		"name": "adv_elasticsearch_ch5_analyzer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tokenizers",
+			"item": [
+				{
+					"name": "standard_tokenizer_standard_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"tokenizer\": \"standard\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "standard_tokenizer_lowercase_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [\"lowercase\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ngram_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": {\"type\":\"ngram\", \"min_gram\":2, \"max_gram\":2, \"token_chars\": [\"punctuation\", \"digit\"]}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "This slides along the input character stream to provide items in the specified length of the specified characters.\nIt uses min_gram (this defaults to 1 ) and max_gram (this defaults to 2 ) to specify the length and token_chars to specify the letters, digits, whitespace, punctuation, and symbol."
+					},
+					"response": []
+				},
+				{
+					"name": "whitespace_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"POST https://api.iextrading.com/1.0/stock/acwf/company /user/local\",\n\t\"tokenizer\": \"whitespace\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pattern_replace_char_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"char_filter\": [\"html_strip\", {\"type\": \"mapping\", \"mappings\": [\"You'll=>You will\"]}, \n\t{\"type\":\"pattern_replace\", \"pattern\":\"(\\\\d+).(\\\\d+)\", \"replacement\":\"v$1\"}],\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [\"lowercase\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "html_strip_standard_tokenizer_mappings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"char_filter\": [\"html_strip\", {\"type\":\"mapping\", \"mappings\": [\"You'll => You will\"]}],\n    \"tokenizer\": \"standard\",\n    \"filter\": [\"lowercase\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "html_strip_map_filter_standard_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"char_filter\": [\"html_strip\"],\n    \"tokenizer\": \"standard\",\n    \"filter\": [\"lowercase\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "keyword_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": \"keyword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edge_ngram",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": {\"type\":\"edge_ngram\", \"min_gram\":2, \"max_gram\":2, \"token_chars\": [\"punctuation\", \"digit\"]}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "is similar to the ngram tokenizer. The difference is that each item is anchored to the starting point of the candidate words."
+					},
+					"response": []
+				},
+				{
+					"name": "standard_analyzer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"<body>You'll love Elasticsearch 7.0</body>\",\n\t\"analyzer\": \"standard\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pattern_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": \"pattern\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "uses a regular expression to perform pattern matching to process the input character stream to obtain terms. The default pattern is \\W+ . Use pattern to specify the regular expression; use flags to specify the flag of the Java regular expression; and use group to specify the group matched."
+					},
+					"response": []
+				},
+				{
+					"name": " char_group_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": {\"type\":\"char_group\",\n\t\"tokenize_on_chars\": [\"whitespace\", \"punctuation\"]}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "Define a set of separators to split the input character stream into terms. Use tokenize_on_chars to specify a list\nof separators."
+					},
+					"response": []
+				},
+				{
+					"name": "simple_pattern_split_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": {\"type\":\"simple_pattern_split\",\n\t\"pattern\": \"[a-zA-Z.]*\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "define the pattern as a separator to split the input character stream into terms. Use pattern to specify the pattern of the separator."
+					},
+					"response": []
+				},
+				{
+					"name": "path_hierarchy_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"/usr/local/files\",\n\t\"tokenizer\": {\"type\":\"path_hierarchy\",\n\t\"replacement\":\"_\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "uses the path separator to split the input character stream into terms. The following parameters can be set: delimiter (theseparator)\nreplacement (the character to replace the delimiter) buffer_size (the maximum length in one batch)\nreverse (this reverses the generated terms)\nskip (the number of generated terms to skip)."
+					},
+					"response": []
+				},
+				{
+					"name": "simple_pattern_tokenizer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": {\"type\":\"simple_pattern\", \"pattern\": \"[a-zA-Z]*\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "imilar to the pattern tokenizer, but with Lucene regular expressions. The tokenization is usually faster (for more\ninformation, you can refer to https://lucene.apache.org/core/7_0_1/core/org/apache/lucene/util/automaton/RegExp.html).\nThe following example matches words only made from letters."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "token_filters",
+			"item": [
+				{
+					"name": "asciifolding_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n       \"text\": \"Ÿőű'ľľ ľőνė Ȅľȁśťĩćŝėȁŕćĥ 7.0\",\n       \"tokenizer\": \"standard\",\n       \"filter\": [{\"type\":\"asciifolding\", \"preserve_original\":true}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "transforms the terms when letters, numbers, and unicode symbols are not in the first 127 ASCII characters to ASCII. The preserve_original parameter (this defaults to false ) will retain the original terms if it is true ."
+					},
+					"response": []
+				},
+				{
+					"name": " ngram_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\":\"ngram\", \"min_gram\":10, \"max_gram\":10}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "This slides along the output term from the tokenizer to provide items in the specified length of the specified characters. Use min_gram (this defaults to 1 ) and max_gram (this defaults to 2 ) to specify the length."
+					},
+					"response": []
+				},
+				{
+					"name": "edge_ngram_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\":\"edge_ngram\", \"min_gram\":10, \"max_gram\":10}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "similar to the ngram token filter. The difference is that each item is anchored to the starting point of the candidate terms."
+					},
+					"response": []
+				},
+				{
+					"name": "fingerprint_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [\"fingerprint\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "Sort, deduplicate, and concatenate the terms from the tokenizer into one term. The separator parameter (this defaults to the space character) can be set to another character. The max_output_size parameter (this defaults to 255 ) will restrict the emitting of the final concatenated term."
+					},
+					"response": []
+				},
+				{
+					"name": "keep_types_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"keep_types\", \"types\":[\"<NUM>\"]}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "Only those terms defined in the list of specified token types are kept. One option is provided: the mode parameter (this defaults to include ) allows you to include or exclude specified types of terms."
+					},
+					"response": []
+				},
+				{
+					"name": " stemmer_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"love loves loved loving\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"stemmer\", \"name\":\"english\"}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "This allows you to specify stemmer in different languages and apply it to the terms."
+					},
+					"response": []
+				},
+				{
+					"name": "keep_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"keep\", \"keep_words\":[\"Elasticsearch\", \"7.0\"]}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "Only those terms defined in the list of specified words are kept.\nThree options are provided: \nthe keep_words parameter allows you to specify a list of words in the filter\nthe keep_words_path parameter allows you to specify a list of words in the file path\nkeep_words_case parameter (this defaults to false) converts the terms to lowercase."
+					},
+					"response": []
+				},
+				{
+					"name": " stop_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"A an The and Elasticsearch\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"stop\", \"stopwords\":[\"_english_\"], \"ignore_case\":true}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "allows you to specify stop words to delete from the terms. Stop words in different languages are provided such as _english_ , and _spanish_ . Use stopwords to specify a list of words to remove. The default value is _english_ . Use stopwords_path to specify a file path relative to the config location that contains a list of words to remove. Use ignore_case to lowercase all the terms first. Use remove_trailing to ignore the last term.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "unique_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"love loves loved loving\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"stemmer\", \"name\":\"english\"}, \"unique\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "allows you to produce unique terms. The custom token filters include stemmer and the unique tokenizer."
+					},
+					"response": []
+				},
+				{
+					"name": "predicate_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"predicate_token_filter\", \"script\":{\"source\":\"token.getType()=='<NUM>'\"}}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "allows you to specify a predicate script. Remove the term if the term does not match. Use the script parameter to specify the predicate."
+					},
+					"response": []
+				},
+				{
+					"name": " conditional_token_filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"You'll love Elasticsearch 7.0\",\n\t\"tokenizer\": \"standard\",\n\t\"filter\": [{\"type\": \"condition\", \"script\":{\"source\":\"token.getType()=='<ALPHANUM>'\"},\n\t\"filter\":[\"reverse\"]}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_analyze"
+							]
+						},
+						"description": "allows you to specify a predicate script and a list of token filters. Apply the token filters to the term if the terms match. \nUse the script parameter to specify the predicate. \nUse the filter parameter to specify the list of token filters. \nIn the following example, the predicate matches the alphanumeric token type and applies the reverse token  filter to reverse the term."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "custom_analyzer",
+			"item": [
+				{
+					"name": "delete_cf_etf",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": " define_custom_analyzer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mappings\": {\n\t\t\"dynamic\": false,\n\t\t\"properties\": {\n\t\t\t\"symbol\": {\"type\": \"keyword\"},\n\t\t\t\"fund_name\": {\"type\": \"text\"},\n\t\t\t\"rating\": {\"type\": \"byte\"},\n\t\t\t\"morningstar_category\": {\"type\": \"keyword\"},\n\t\t\t\"category\": {\"type\": \"keyword\"},\n\t\t\t\"family\": {\"type\": \"keyword\"},\n\t\t\t\"market_cap\": {\"type\": \"keyword\"},\n\t\t\t\"description\": {\"type\": \"text\", \"fields\": {\"raw\": {\"type\":\"keyword\"}},\n\t\t\t\"analyzer\":\"description_analyzer\", \"search_analyzer\":\"description_analyzer\"},\n\t\t\t\"exchange\": {\"type\": \"keyword\"}\n\t\t\t}\n\t\t\t},\n\t\"settings\": {\n\t\t\"analysis\": {\n\t\t\t\"analyzer\" : {\n\t\t\t\t\"description_analyzer\": {\n\t\t\t\t\t\"type\": \"custom\",\n\t\t\t\t\t\"tokenizer\": \"description_tokenizer\",\n\t\t\t\t\t\"filter\": [\"lowercase\", \"description_pattern_replace_filter\", \"description_stemmer_filter\", \"description_stop_filter\", \"description_length_filter\", \"unique\"]\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\"tokenizer\": {\n\t\t\t\t\t\"description_tokenizer\" : {\n\t\t\t\t\t\t\"type\":\"char_group\",\n\t\t\t\t\t\t\"tokenize_on_chars\": [\"whitespace\", \"digit\", \"symbol\", \"\\\\n\", \",\", \":\", \"!\", \"?\", \";\", \",\", \"_\", \"{\", \"[\", \"}\", \"]\", \"(\", \")\", \"\\\\\", \"\\/\",\"\\\"\"]}\n                    },\n              \"filter\": {\n              \t\"description_pattern_replace_filter\": {\"type\":\"pattern_replace\", \"pattern\": \"(\\\\w{2,})\\\\.\", \"replacement\":\"$1\"},\n              \t\"description_stemmer_filter\" : {\"type\":\"stemmer\", \"name\":\"light_english\"},\n              \t\"description_stop_filter\": {\"type\":\"stop\", \"stopwords_path\":\"stopwords\"},\n              \t\"description_length_filter\": {\"type\":\"length\", \"min\":2}\n              \t}\n            }\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf"
+							]
+						},
+						"description": "requires stopwords file to be in /etc/elasticsearch\nhttps://github.com/PacktPublishing/Mastering-Elasticsearch-7.0/tree/master/Chapter5"
+					},
+					"response": []
+				},
+				{
+					"name": "get__custom_analyzer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test_custom_analyzer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\":\"The investment seeks to track the price and yield performance, before fees and expenses, of the Bloomberg Barclays U.S. Aggregate Enhanced Yield Index (the \\\\\\\"index\\\\\\\").\\\\n The index is designed to broadly capture the U.S. investment grade, fixed income securities market while seeking to enhance yield within desired risk parameters and constraints. The fund is non-diversified.\",\n\t\"analyzer\": \"description_analyzer\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_analyze",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "normalizers",
+			"item": [
+				{
+					"name": "delete_cf_etf_toy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_toy",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_toy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_lowercase_normailizer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"settings\": {\n\t\t\"analysis\": {\n\t\t\t\"normalizer\" : {\n\t\t\t\t\"lowercase_normalizer\": {\n\t\t\t\t\t\"type\": \"custom\",\n\t\t\t\t\t\"filter\": [\"lowercase\"]\n\t\t\t\t\t}\n\t\t\t\t}\n            }\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_toy",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_toy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test_lowercase_normailizer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

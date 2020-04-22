@@ -1,0 +1,2220 @@
+{
+	"info": {
+		"_postman_id": "0e7a5e6d-e07b-4ea3-b982-3fe02cb4ab4c",
+		"name": "adv_elasticsearch_ch6_search_APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "search_basics",
+			"item": [
+				{
+					"name": "search_query_default_operator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/_search?q=fund_name:ishares edge global&default_operator=AND",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "fund_name:ishares edge global"
+								},
+								{
+									"key": "default_operator",
+									"value": "AND"
+								}
+							]
+						},
+						"description": "http://localhost:9200/cf_etf/_search?q=fund_name:ishares edge global&default_operator=AND\n\n\tThe query is to restrict the returned documents where the field, fund_name , must contain all three words— iShares , Edge , and Global ."
+					},
+					"response": []
+				},
+				{
+					"name": "search_within_cf_etf_cf_view",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf,cf_view/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf,cf_view",
+								"_search"
+							]
+						},
+						"description": "search across 2 indices\n\nshould return something more than 314\n\"value\": 318,"
+					},
+					"response": []
+				},
+				{
+					"name": "count_etf_list_bulk_indexed_doc",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_count",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_count"
+							]
+						},
+						"description": "should return 314"
+					},
+					"response": []
+				},
+				{
+					"name": "search_within_cf_etf",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "return all\n\nhits\": {\n        \"total\": {\n            \"value\": 314,"
+					},
+					"response": []
+				},
+				{
+					"name": "search_cf_etf_from_size_sort_source_false",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search?from=2&size=2&sort=symbol:asc&_source=false",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "symbol:asc"
+								},
+								{
+									"key": "_source",
+									"value": "false"
+								}
+							]
+						},
+						"description": "POST http://localhost:9200/cf_etf/_search?from=2&size=2&sort=symbol:asc&_source=false\n\nfrom=2 parameter to control the starting item index to 2\n\nsize=2 parameter to control the number of items returned to 2\n\nsort=symbol:asc parameter to sort the symbol field in ascending order.\n\n_source=false parameter to disable the return of the _source field\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "search_within_all_indices",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_search"
+							]
+						},
+						"description": "returns all docs in all indices\n\n    \"hits\": {\n        \"total\": {\n            \"value\": 601,"
+					},
+					"response": []
+				},
+				{
+					"name": "search_query_default_operator_explain",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search?q=fund_name:ishares edge global&default_operator=AND&explain=true",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "fund_name:ishares edge global"
+								},
+								{
+									"key": "default_operator",
+									"value": "AND"
+								},
+								{
+									"key": "explain",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search_query_keyword_analyzer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search?q=fund_name:ishares edge global&default_operator=AND&analyzer=keyword",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "fund_name:ishares edge global"
+								},
+								{
+									"key": "default_operator",
+									"value": "AND"
+								},
+								{
+									"key": "analyzer",
+									"value": "keyword"
+								}
+							]
+						},
+						"description": "keyword analyzer will not retuen anything"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "request_body_search",
+			"item": [
+				{
+					"name": "request_body_search_from_size_sort_source_false",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"from\":2,\n\t\"size\":2,\n\t\"sort\":{\"symbol\":\"asc\"},\n\t\"_source\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_sort_rating_symbol",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:ishares edge msci\", \n\t\t\t\"default_operator\": \"AND\"\n\t\t\t}\n       },\n       \"sort\":{\"rating\":\"desc\", \"symbol\":\"asc\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "to obtain ishares edge msci series commission free ETFs . The result needs to be sorted with the rating field first, followed by the symbol field"
+					},
+					"response": []
+				},
+				{
+					"name": "search_query_scroll_1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n       \"size\": 313\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search?scroll=10m",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "scroll",
+									"value": "10m"
+								}
+							]
+						},
+						"description": "scrolling is executed three times to consume all documents. We will set the size to 313 and specify 10 minutes for the live time period\n\nWill need to run the 2nd scroll request with the scroll_id"
+					},
+					"response": []
+				},
+				{
+					"name": "search_query_scroll_2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"scroll\":\"10m\",\n\t\"scroll_id\": \"DXF1ZXJ5QW5kRmV0Y2gBAAAAAAAAJA8WeG9STGZ3cktRNEdYaUVnS1ZhRjRKQQ==\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_search/scroll",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_search",
+								"scroll"
+							]
+						},
+						"description": "2nd part of the scroll request"
+					},
+					"response": []
+				},
+				{
+					"name": "search_query_scroll_3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"scroll\":\"10m\",\n\t\"scroll_id\": \"DXF1ZXJ5QW5kRmV0Y2gBAAAAAAAAJA8WeG9STGZ3cktRNEdYaUVnS1ZhRjRKQQ==\"\n}\n\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_search/scroll",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_search",
+								"scroll"
+							]
+						},
+						"description": "this should be empty"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_scroll context",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"scroll_id\": \"DXF1ZXJ5QW5kRmV0Y2gBAAAAAAAAANQWNWdUemoybmFSOUNvM3gwQkRZT0xBQQ==\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_search/scroll",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_search",
+								"scroll"
+							]
+						},
+						"description": "Run this to free up resources\n\nneeds the last scroll_id"
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_after",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"size\":2,\n    \"sort\": {\n        \"rating\":\"desc\",\n        \"symbol\":\"asc\"\n       },\n    \"search_after\": [5, \"EES\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_rescore_original",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"description:emerging non-diversified high-yield gobal dividend\",\n\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t}\n\t\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "calculate the final score from the original score and rescore\n\nThe query is to find the description field with the words emerging, non-diversified, high-yield, global, or \ndividend.\nThe first hit is the EDIV symbol with _score=4.9638467 :"
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_rescore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"description:emerging non-diversified high-yield gobal dividend\",\n\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t}\n\t\t},\n\t\"rescore\": {\n\t\t\"window_size\":500,\n\t\t\"query\": {\n\t\t\t\"rescore_query\": {\n\t\t\t\t\"query_string\": {\n\t\t\t\t\t\"query\":\"description:global\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"query_weight\" : 0.1,\n\t\t\t\"rescore_query_weight\" : 0.9\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "rescore the resulting documents with a higher weight if the description field contains a global word. We set the weight for the original request to 0.1, and the rescore request to 0.9. The first hit is the DEW symbol with\nscore=2.7334738"
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_rescore_mode",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"description:emerging non-diversified high-yield gobal dividend\",\n\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t}\n\t\t},\n\t\"rescore\": {\n\t\t\"window_size\":100,\n\t\t\"query\": {\n\t\t\t\"rescore_query\": {\n\t\t\t\t\"query_string\": {\n\t\t\t\t\t\"query\":\"description:global\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"score_mode\": \"avg\"\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "same resxorce but with score_mode:avg\n\nThe first hit will be the DGRE symbol with _score=2.7893128"
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_named_queries",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"should\":[\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"_name\":\"Asia\",\n\t\t\t\t\t\"query\": \"description:asia\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t}},\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"_name\":\"usa\",\n\t\t\t\t\t\"query\": \"description:usa\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t}},\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"_name\":\"europe\",\n\t\t\t\t\t\"query\": \"description:europe\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t}}\n\t\t\t]\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "finding the description field containing the keyword Asia,\nUSA, or Europe. However, we want to report matching keywords in the hit. We can issue a bool query with a should clause, where each query is named for a region"
+					},
+					"response": []
+				},
+				{
+					"name": "request_body_search_field_collapse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\"range\": {\"rating\":{\"gte\":4}}\n\t},\n\t\"collapse\" : {\n\t\t\"field\":\"rating\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "56963b68-9c33-4470-93f3-2c1aa7493d1a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "23bd1af2-e445-41e5-933f-7affa2877697",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "highlighters",
+			"item": [
+				{
+					"name": "highlighting",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"should\":[\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"query\": \"description:asia\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t\t}},\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"query\": \"description:usa\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t\t}},\n\t\t\t\t{\"query_string\": {\n\t\t\t\t\t\"query\": \"description:europe\",\n\t\t\t\t\t\"analyzer\":\"description_analyzer\"\n\t\t\t\t\t}}\n\t\t\t\t]\n\t\t\t}\n\t\t},\n\t\t\"highlight\": {\n\t\t\t\"fields\":{\n\t\t\t\t\"description\":{}\n\t\t\t}\n\t\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "highlighting_number_of_fragments_0",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\":[\n\t\t\t{\"match\":{\"description\":\"index\"}}\n\t\t\t]\n\t\t}\n\t},\n\t\"highlight\": {\n\t\t\"fields\":{\n\t\t\t\"description\":{\"number_of_fragments\":0}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "highlighting_fragment_size_20",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\":[\n\t\t\t{\"match\":{\"description\":\"index\"}}\n\t\t\t]\n\t\t}\n\t},\n\t\"highlight\": {\n\t\t\"fields\":{\n\t\t\t\"description\":{\"fragment_size\": 20}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "highlighting_highlight_fields_unordered",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"multi_match\": {\n\t\t\t\"query\": \"asia\",\n\t\t\t\"fields\": [\"fund_name\", \"description\"]\n\t\t}\n\t},\n\t\"highlight\": {\n\t\t\"fields\":{\n\t\t\t\"fund_name\":{},\n\t\t\t\"description\":{}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "highlighting_multi_match",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"multi_match\": {\n\t\t\t\"query\": \"asia\",\n\t\t\t\"fields\": [\"fund_name\", \"description\"]\n\t\t}\n\t},\n\t\"highlight\": {\n\t\t\"fields\":[\n\t\t\t{\"fund_name\":{}},\n\t\t\t{\"description\":{}}\n\t\t]\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "query_dsl",
+			"item": [
+				{
+					"name": "query_match",
+					"item": [
+						{
+							"name": "match_query_or",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"match\": {\"fund_name\": {\n\t\t\t\"query\": \"ishares global\"\n\t\t\t}\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								},
+								"description": "using the default operator, or , to find the ETFs with the fund_name field that contains either one, ishares or global word."
+							},
+							"response": []
+						},
+						{
+							"name": "match_query_and",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"match\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"query\": \"ishares global\",\n\t\t\t\t\"operator\": \"and\"\n\t\t\t}\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								},
+								"description": "use the operator parameter with the and option to find the ETFs with the fund_name field that contains both words"
+							},
+							"response": []
+						},
+						{
+							"name": "match_query_fuzziness_2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"match\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"query\": \"ishares global\",\n\t\t\t\t\"operator\": \"and\",\n\t\t\t\t\"fuzziness\":2\n\t\t\t}\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								},
+								"description": "fuzziness=2 (this permits two edits to the token). \nreturns 5 hits, \n\nin the fuzzy matching the word global can be changed to local with two edits"
+							},
+							"response": []
+						},
+						{
+							"name": "match_phrase_query",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"match_phrase\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"query\": \"ishares msci\"\n\t\t\t}\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								},
+								"description": "using match_phrase to retrieve all iShares msci ETFs.\n\n18 ETFs have a name with that phrase."
+							},
+							"response": []
+						},
+						{
+							"name": "match_phrase_query_prefix",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"match_phrase_prefix\": {\n\t\t\t\"description\": {\n\t\t\t\t\"query\": \"The investment seeks to track\"\n\t\t\t}\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "query_string",
+					"item": [
+						{
+							"name": "query_string_regex",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"symbol://ACW?//\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_range_query",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n\t\"sort\":{\"rating\":\"desc\"},\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"rating:[1 TO 3}\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_boolean_characters",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:((usa || asia) && emerging && ! global)\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_wildcard",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"symbol:ACW*\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_exact_phrase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:\\\"iShares MSCI ACWI ETF\\\"\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_fuzziness",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:(ishares~ && global~)\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query_string_boosting",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:(ishares global^2)\"\n\t\t}\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.0.2.15:9200/cf_etf/_search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"0",
+										"2",
+										"15"
+									],
+									"port": "9200",
+									"path": [
+										"cf_etf",
+										"_search"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "query_intervals",
+			"item": [
+				{
+					"name": "intervals_query_order_and_max_gap",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\":50,\n\t\"query\": {\n\t\t\"intervals\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"all_of\": {\n\t\t\t\t\t\"ordered\":true,\n\t\t\t\t\t\"intervals\":[\n\t\t\t\t\t\t{\"match\": {\"query\":\"MSCI Markets\", \"max_gaps\" : 1}},\n\t\t\t\t\t\t{\"match\": {\"query\": \"ETF\"}}\n                    ]\n                }\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "The first criterion is that the ETFs fund_name field\nmust have the text MSCI Markets , with a gap of at most one word between.\n\nThe second criterion is that the ETFs fund_name field must have the text ETF, and it must appear after MSCI Markets. The total number of hits is 4 ETFs:"
+					},
+					"response": []
+				},
+				{
+					"name": "intervals_query_max_gap_not_match",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\":50,\n\t\"query\": {\n\t\t\"intervals\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"all_of\": {\n\t\t\t\t\t\"ordered\":true,\n\t\t\t\t\t\"intervals\":[\n\t\t\t\t\t\t{\"match\": {\"query\":\"MSCI Markets\", \"max_gaps\" : 0}},\n\t\t\t\t\t\t{\"match\": {\"query\": \"ETF\"}}\n                    ]\n                }\n\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "intervals_query_order_not_match",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\":50,\n\t\"query\": {\n\t\t\"intervals\": {\n\t\t\t\"fund_name\": {\n\t\t\t\t\"all_of\": {\n\t\t\t\t\t\"ordered\":true,\n\t\t\t\t\t\"intervals\":[\n\t\t\t\t\t\t{\"match\": {\"query\": \"ETF\"}},\n\t\t\t\t\t\t{\"match\": {\"query\":\"MSCI Markets\", \"max_gaps\" : 1}}\n                    ]\n                }\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "query_term",
+			"item": [
+				{
+					"name": "term_query_term",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"term\": {\n\t\t\t\"symbol\": \"ACWI\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_terms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"terms\": {\n\t\t\t\"symbol\": [\"ACWI\", \"ACWF\"]\n\t\t}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_range",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"range\": {\n\t\t\t\"rating\": {\n\t\t\t\t\"gte\": 3,\n\t\t\t\t\"lt\":5\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"exists\": {\"field\":\"fund_name\"}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_prefix",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{       \"query\": {\n              \"prefix\": {   \"symbol\":\"ACW\"}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_wildcard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"wildcard\": {\"symbol\":\"A*I\"}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_regexp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"regexp\": {\"symbol\":\"ACW[IF]\"}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_fuzzy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"fuzzy\": {\"symbol\":\"ACW~\"}\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term_query_ids",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"ids\": {\"values\":[\"oU2jLGkB_W0hQaVaoEie\", \"GgOJ7msB3gfI-VGlT4dA\"]}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "compund_queries",
+			"item": [
+				{
+					"name": "script_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": {\"match_phrase_prefix\": {\"fund_name\": \"ishares edge\" }},\n\t\t\t\"filter\": {\n\t\t\t\t\"script\": {\n\t\t\t\t\t\"script\": {\n\t\t\t\t\t\t\"lang\": \"painless\",\n\t\t\t\t\t\t\"source\":\"if (!doc['rating'].empty && doc['rating'].value >= 4) return true; else false;\"\n                                    }\n                             }\n                      }\n              }\n       }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bool_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": {\"match_phrase_prefix\": {\"fund_name\": \"ishares edge\" }},\n\t\t\t\"must_not\": {\"match\": {\"fund_name\":\"global\"}}\n\t\t}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "boosting_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"boosting\": {\n\t\t\t\"positive\": {\"match_phrase_prefix\": {\"fund_name\": \"ishares edge\" }},\n\t\t\t\"negative\": {\"term\":{\"category\":\"Equity\"}},\n\t\t\t\"negative_boost\":0.1\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dismax_query_query_1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"dis_max\": {\n\t\t\t\"queries\": [\n\t\t\t{\"match_phrase\": {\"fund_name\": \"ishares edge\" }}\n                ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": " dismax_query_query_2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"dis_max\": {\n\t\t\t\"queries\": [\n\t\t\t{\"match\": {\"morningstar_category\": \"World Large Stock\"}}\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dismax_query_query_1-2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"dis_max\": {\n\t\t\t\"queries\": [\n\t\t\t\t{\"match_phrase\": {\"fund_name\": \"ishares edge\" }},\n\t\t\t\t{\"match\": {\"morningstar_category\": \"World Large Stock\"}}\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": " function_score_query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t       \"query\": {\n\t       \t\"function_score\": {\n\t       \t\t\"query\": {\"match_phrase\": {\"fund_name\": \"ishares edge\" }},\n\t       \t\t\"functions\":[\n\t       \t\t\t{\"filter\":{\"wildcard\": {\"morningstar_category\": \"*Stock\"}}, \"weight\":2},\n\t       \t\t\t{\"filter\":{\"wildcard\": {\"morningstar_category\": \"*Growth\"}}, \"weight\":1.5},\n\t       \t\t\t{\"filter\":{\"wildcard\": {\"morningstar_category\": \"*Blend\"}}, \"weight\":0.5}\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Compound queries are used to combine multiple clauses to build a complex query",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "explain_api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_explain/GgOJ7msB3gfI-VGlT4dA",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_explain",
+						"GgOJ7msB3gfI-VGlT4dA"
+					]
+				},
+				"description": "needs a valid doc _id"
+			},
+			"response": []
+		},
+		{
+			"name": "validate_api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": { \n    \t\"match\": {\"rating\":\"five\"}\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_validate/query?explain=true",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_validate",
+						"query"
+					],
+					"query": [
+						{
+							"key": "explain",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://10.0.2.15:9200/cf_etf/_msearch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_msearch",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_msearch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search_count_api_fund_name_w_asia",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"term\": {\"fund_name\":\"asia\"}\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_count",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " search_request_profiling",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"profile\":true,\n\t\"query\": {\n\t\t\"query_string\": {\n\t\t\t\"query\": \"fund_name:ishares description:global\", \n\t\t\t\"default_operator\": \"AND\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "field_capabilities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/_field_caps?fields=fund_name,description",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_field_caps"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "fund_name,description"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ranking_evaluation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"requests\": [\n\t\t{\n\t\t\t\"id\": \"Asia\",\n\t\t\t\"request\":{\"query\": {\"match\":{\"description\":\"asia\"}}},\n\t\t\t\"ratings\": []\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"Global\",\n\t\t\t\t\"request\":{\"query\": {\"match\":{\"description\":\"global\"}}},\n\t\t\t\t\"ratings\": []\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"metric\": {\n\t\t\t\t\"precision\": {\n\t\t\t\t\t\"k\" : 3,\n\t\t\t\t\t\"relevant_rating_threshold\" : 1\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_rank_eval",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_rank_eval"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " term_suggester",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"suggest\": {\n\t\t\"text\": \"asian stock\",\n\t\t\"suggester_1\": {\n\t\t\t\"term\": {\n\t\t\t\t\"field\": \"fund_name\"\n\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\"suggester_2\": {\n\t\t\t\t\t\"term\": {\n\t\t\t\t\t\t\"field\": \"description\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " phrase_suggester",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"suggest\": {\n\t\t\"text\": \"divide weigh index\",\n\t\t\"suggester\": {\n\t\t\t\"phrase\": {\n\t\t\t\t\"field\": \"description\"\n\t\t\t\t}\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_suggester",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"suggest\": {\n\t\t\"fund_name_suggester\": {\n\t\t\t\"prefix\":\"ishares edge\",\n\t\t\t\"completion\": {\n\t\t\t\t\"field\": \"fund_name\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf",
+						"_search"
+					]
+				},
+				"description": "didn't work\n"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "640c82e1-0e75-4bf0-bb3f-c942aaac13a8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e4680a6c-03bd-42a6-a342-4046c3498587",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

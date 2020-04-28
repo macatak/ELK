@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "c534b7a0-f747-4043-b14a-9e3c409e84c2",
+		"name": "adv_elasticsearch_ch7_modeling_data",
+		"description": "A lot of the end querires did not work. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create_dividend_denormalize/_mappings_index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_denormalize",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_denormalize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_denormalize_mappings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_denormalize/_mappings",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_denormalize",
+						"_mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IEX_ACWF_chart_3m",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://cloud.iexapis.com/v1/stock/ACWF/chart/3m?token=pk_bb9c27744c1445ba89e21c50ed348f0b",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"iexapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"stock",
+						"ACWF",
+						"chart",
+						"3m"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "pk_bb9c27744c1445ba89e21c50ed348f0b"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_denormalize_search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": [\n\t\t\t\t{\n\t\t\t\t\t\"range\": {\n\t\t\t\t\t\t\"exDate\": {\n                            \"lte\": \"2016-02-01\"\n                        }\n                    }\n                },\n                {\n                    \"range\": {\n                        \"amount\": {\n                            \"gte\": 0.1\n                        }\n                    }\n                },\n                {\n                    \"match\": {\n                        \"symbol\": \"ACWF\"\n                    }\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_denormalize/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_denormalize",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_indices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/_cat/indices/cf*?v",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_cat",
+						"indices",
+						"cf*"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_array_object_mappings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_io/_mappings",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_io",
+						"_mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_array_object_search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": [\n\t\t\t\t{\n\t\t\t\t\t\"range\": {\n\t\t\t\t\t\t\"announcement.exDate\": {\n\t\t\t\t\t\t\t\"lte\": \"2016-02-01\"\n                        }\n                    }\n                },\n                {\n                    \"range\": {\n                        \"announcement.amount\": {\n                            \"gte\": 0.1\n                        }\n                    }\n                },\n                {\n                    \"match\": {\n                        \"symbol\": \"ACWF\"\n                    }\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_io/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_io",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_array_object_search _none",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": { \n    \t\"bool\": {\n    \t\t\"must\": [\n    \t\t\t{\n    \t\t\t\t\"range\": {\n    \t\t\t\t\t\"announcement.exDate\": {\n    \t\t\t\t\t\t\"lte\": \"2015-12-01\"\n    \t\t\t\t\t\t}\n    \t\t\t\t\t}\n    \t\t\t\t},\n    \t\t\t\t{\n    \t\t\t\t\t\"range\": {\n    \t\t\t\t\t\t\"announcement.amount\": {\n    \t\t\t\t\t\t\t\"gte\": 0.2\n                        }\n                    }\n                },\n                {\n                    \"match\": {\n                        \"symbol\": \"ACWF\"\n                    }\n                }\n            ]\n        }\n   }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200cf_etf_dividend_io/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200cf_etf_dividend_io",
+					"path": [
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_nested_object_search_all",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_nested/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_nested",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_nested_object_search_none",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": [\n\t\t\t\t{\n\t\t\t\t\t\"match\": {\n\t\t\t\t\t\t\"symbol\": \"ACWF\"\n\t\t\t\t\t\t}\n                },\n                {\n                \"nested\": {\n                \t\"path\": \"announcement\",\n                \t\"query\": {\n                \t\t\"bool\": {\n                \t\t\t\"must\": [\n                \t\t\t\t{\n                \t\t\t\t\t\"range\": {\n                \t\t\t\t\t\t\"announcement.exDate\": { \"lte\": \"2015-12-01\"  }}},\n                                {\n                                        \"range\": {\n                                            \"announcement.amount\": { \"gte\": 0.2 }}}\n                                ]\n                            }\n                        }\n                    }\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_nested/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_nested",
+						"_search"
+					]
+				},
+				"description": "No hit is returned in the result. \nmust use the nested query on the fields of the nested object type"
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_nested_object_search_amount_0.1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n\t\t\t\"must\": [\n\t\t\t\t{\n\t\t\t\t\t\"match\": {\n\t\t\t\t\t\t\"symbol\": \"ACWF\"\n\t\t\t\t\t\t}\n                },\n                {\n                \"nested\": {\n                \t\"path\": \"announcement\",\n                \t\"query\": {\n                \t\t\"bool\": {\n                \t\t\t\"must\": [\n                \t\t\t\t{\n                \t\t\t\t\t\"range\": {\n                \t\t\t\t\t\t\"announcement.exDate\": { \"lte\": \"2015-12-01\"  }}},\n                                {\n                                        \"range\": {\n                                            \"announcement.amount\": { \"gte\": 0.1 }}}\n                                ]\n                            }\n                        }\n                    }\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_nested/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_nested",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_nested_object_search_amount_0.1_inner_hit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\n\t\t\"bool\": {\n            \"must\": [\n                {\n                  \"match\": {\n                        \"symbol\": \"ACWF\"\n                    }\n                },\n                {\n                \t\"nested\": {\n                \t\t\"path\": \"announcement\",\n                \t\t\"query\": {\n                \t\t\t\"bool\": {\n                \t\t\t\t\"must\": [\n                \t\t\t\t\t{\n                \t\t\t\t\t\t\"range\": {\n                \t\t\t\t\t\t\t\"announcement.exDate\": { \"lte\": \"2015-12-01\" }}},\n                                    {\n                                        \"range\": {\n                                            \"announcement.amount\": { \"gte\": 0.1 }}}\n                                ]\n                            }\n                        },\n                        \"inner_hits\": {}\n                    }\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_nested/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_nested",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_join_index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"mappings\": {\n    \"dynamic\": false,\n    \"properties\": {\n        \"cf_etf_dividend\": {\n                \"type\": \"join\",\n                \"relations\": {\n                        \"cf_etf\":\"dividend\"\n                }\n        },\n        \"symbol\": {\"type\": \"keyword\"},\n        \"fund_name\": {\"type\": \"completion\"},\n        \"rating\": {\"type\": \"byte\"},\n        \"morningstar_category\": {\"type\": \"keyword\"},\n        \"category\": {\"type\": \"keyword\"},\n        \"family\": {\"type\": \"keyword\"},\n        \"market_cap\": {\"type\": \"keyword\"},\n        \"description\": {\n           \"type\": \"text\",\n            \"fields\":{\n                \"raw\": {\n                        \"type\":\"keyword\"\n                }\n        },\n        \"analyzer\":\"description_analyzer\",\n        \"search_analyzer\":\"description_analyzer\"\n        },\n        \"exchange\": {\"type\": \"keyword\"},\n        \"amount\": { \"type\": \"float\" },\n        \"declaredDate\": { \"type\": \"date\" },\n        \"exDate\": { \"type\": \"date\" },\n        \"flag\": { \"type\": \"keyword\"},\n        \"paymentDate\": { \"type\": \"date\" },\n        \"recordDate\": { \"type\": \"date\" },\n        \"currency\": { \"type\": \"keyword\"},\n        \"frequency\": { \"type\": \"keyword\"}\n       }\n   },\n        \"settings\": {\n                \"index\": {\n                        \"number_of_shards\":3\n               },\n                \"analysis\": {\n                                    \"analyzer\" : {\n                                           \"description_analyzer\": {\n                                                  \"type\": \"custom\",\n                                                  \"tokenizer\": \"description_tokenizer\",\n                                                  \"filter\": [\"lowercase\", \"description_pattern_replace_filter\", \"description_stemmer_filter\", \"description_stop_filter\", \"description_length_filter\", \"unique\"]\n                                           }\n                                    },\n                                    \"tokenizer\": {\n                                           \"description_tokenizer\" : {\"type\":\"char_group\", \"tokenize_on_chars\": [\"whitespace\", \"digit\", \"symbol\", \"\\\\n\", \",\", \":\", \"!\", \"?\", \";\", \",\", \"_\", \"{\", \"[\", \"}\", \"]\", \"(\", \")\", \"\\\\\", \"\\/\",\"\\\"\"]}\n                                    },\n                                    \"filter\": {\n                                           \"description_pattern_replace_filter\": {\"type\":\"pattern_replace\", \"pattern\": \"(\\\\w{2,})\\\\.\", \"replacement\":\"$1\"},\n                                           \"description_stemmer_filter\" : {\"type\":\"stemmer\", \"name\":\"light_english\"},\n                                           \"description_stop_filter\": {\"type\":\"stop\", \"stopwords_path\":\"stopwords\"},\n                                           \"description_length_filter\": {\"type\":\"length\", \"min\":2}\n                                    }\n                }\n        }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_join/",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_join",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_acwf_join_bulk_index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\"index\": { \t\"_index\":\"cf_etf_dividend_join\", \"_id\":\"12345678\"}}{\"symbol\": \"ACWF\", \"fund_name\": \"iShares Edge MSCI Multifactor Global ETF\", \"rating\": 3, \"morningstar_category\": \"World Large Stock\", \"category\": \"Equity\", \"family\": \"iShares\", \"market_cap\": \"large\", \"description\": \"The investment seeks to track the investment results of the MSCI ACWI Diversified Multiple-Factor Index fund generally will invest at least 90% of its assets in the component securities of the underlying index and in investments that have economic characteristics that are substantially identical to the component securities of the underlying index. The underlying index is designed to contain equity securities from the MSCI ACWI Index that have high exposure to four investment style factors: value, quality, momentum and low size, while maintaining a level of risk similar to that of the parent index.\",\"exchange\": \"NYSE Arca\", \"cf_etf_dividend\": {\"name\":\"cf_etf\"} }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_join/_bulk",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_join",
+						"_bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_join_bulk_index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n{\"cf_etf_dividend\" :\n    {\"name\":\"dividend\", \"parent\":\"12345678\"}, \n    \"exDate\": \"2017-12-19\", \n    \"paymentDate\": \"2017-12-26\", \n    \"recordDate\": \"2017-12-20\",\n\n       \"declaredDate\": \"2016-12-28\", \n\n       \"amount\": 0.352788, \n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\" }\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \"parent\":\"12345678\"},\n\n       \"exDate\": \"2017-12-19\", \n\n       \"paymentDate\": \"2017-12-26\", \n\n       \"recordDate\": \"2017-12-20\", \n\n       \"declaredDate\": \"2017-12-18\", \n\n       \"amount\": 0.352788, \n\n       \"flag\": \"FI\", \"type\": \n\n       \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\" }\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \"parent\":\"12345678\"}, \n\n       \"exDate\": \"2017-06-20\", \n\n       \"paymentDate\": \"2017-06-26\", \n\n       \"recordDate\": \"2017-06-22\", \n\n       \"declaredDate\": \"2017-06-19\", \n\n       \"amount\": 0.243309, \n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\" }\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \"parent\":\"12345678\"}, \n\n       \"exDate\": \"2016-12-21\", \n\n       \"paymentDate\": \"2016-12-28\", \n\n       \"recordDate\": \"2016-12-23\", \n\n       \"declaredDate\": \"2016-12-20\", \n\n       \"amount\": 0.23977, \n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\" }\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \"parent\":\"12345678\"}, \n\n       \"exDate\": \"2016-06-22\", \n\n       \"paymentDate\": \"2016-06-28\", \n\n       \"recordDate\": \"2016-06-24\", \n\n       \"declaredDate\": \"2016-06-21\", \n\n       \"amount\": 0.227895, \n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\" }\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \n\n       \"parent\":\"12345678\"},\n\n       \"exDate\": \"2015-12-21\", \n\n       \"paymentDate\": \"2015-12-28\", \n\n       \"recordDate\": \"2015-12-23\", \n\n       \"declaredDate\": \"2015-12-18\", \n\n       \"amount\": 0.103705, \n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\",\n\n       \"indicated\": \"\"}\n\n{\"index\":{\"_index\":\"cf_etf_dividend_join\", \"routing\":\"12345678\"}}\n\n{\"cf_etf_dividend\":\n\n       {\"name\":\"dividend\", \"parent\":\"12345678\"}, \n\n       \"exDate\": \"2015-06-25\", \n\n       \"paymentDate\": \"2015-07-01\", \n\n       \"recordDate\": \"2015-06-29\", \n\n       \"declaredDate\": \"2015-06-24\", \n\n       \"amount\": 0.111075,\n\n       \"flag\": \"\", \n\n       \"type\": \"Dividend income\", \n\n       \"qualified\": \"\", \n\n       \"indicated\": \"\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_dividend_join/_bulk",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_dividend_join",
+						"_bulk"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "510b0e6b-b0b5-4e93-89e1-066fc69c0931",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c0aab08-9025-434f-b3e4-7b5adee80fc9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,733 @@
+{
+	"info": {
+		"_postman_id": "95719802-8fa8-4fbc-b863-896b3b46921c",
+		"name": "adv_elasticsearch_ch8_aggregations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "matrix_stats",
+			"item": [
+				{
+					"name": "cf_etf_hist_price_matrix_stats",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"size\": 0,\n       \"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n    \"aggs\": {\n        \"statistics\": {\n            \"matrix_stats\": {\n                \"fields\": [\"volume\", \"changePercent\"]\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count_cf_etf_hist_price_index_dcoument",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_count",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_avg_acwf_change",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"size\": 0,\n       \"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n    \"aggs\": {\"acwf_avg_change_price\": {\"avg\": { \"field\": \"change\" }}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "base",
+			"item": [
+				{
+					"name": "IEX_ACWF_chart_3m",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cloud.iexapis.com/v1/stock/ACWF/chart/3m?token=pk_bb9c27744c1445ba89e21c50ed348f0b",
+							"protocol": "https",
+							"host": [
+								"cloud",
+								"iexapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"stock",
+								"ACWF",
+								"chart",
+								"3m"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "pk_bb9c27744c1445ba89e21c50ed348f0b"
+								}
+							]
+						},
+						"description": "get the data"
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_historical_prices_mapping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_historical_prices document_count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_count",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_dcoument_search_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "metrics_aggregations",
+			"item": [
+				{
+					"name": "cf_etf_morningstart_categories_cardinality",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n       \"size\": 0,\n    \"aggs\": {\n       \"number_of_morningstar_category\": {\n              \"cardinality\": {\"field\": \"morningstar_category\"}\n       }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_weight_avg_acwf_change",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n       \"size\": 0,\n       \"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n    \"aggs\": {\n       \"acwf_avg_change_with_vol_weight\": {\n              \"weighted_avg\": {\n                     \"value\": {\"field\": \"change\"}, \"weight\": {\"field\": \"volume\"}\n              }\n       }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_market_cap_value_count",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n       \"size\": 0,\n    \"aggs\": {\n       \"num_of_etfs_have_market_cap\": {\n              \"value_count\": {\"field\": \"market_cap\"}\n       }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_dividend_acwf_amount_sum",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"sum_amount\": {\n\t\t\t\"sum\": {\"field\": \"amount\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_dividend_denormalize/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_dividend_denormalize",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_acwf_maximum_open_price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"maximum_open_price\": {\n\t\t\t\"max\": {\"field\": \"open\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_acwf_stats_open_price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"stats_open_price\": {\n\t\t\t\"stats\": {\"field\": \"open\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_acwf_extended_stats_open_price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"extended_stats_open_price\": {\n\t\t\t\"extended_stats\": {\"field\": \"open\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_acwf_minimum_open_price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"minimum_open_price\": {\n\t\t\t\"min\": {\"field\": \"open\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_top_hit_morningstar_category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"aggs\": {\n\t\t\"category_top_hits\": {\n\t\t\t\"terms\": {\n\t\t\t\t\"field\":\"morningstar_category\",\n\t\t\t\t\"size\": 5\n\t\t\t},\n\t\t\t\"aggs\":{\n\t\t\t\t\"category_top_hits\": {\n\t\t\t\t\t\"top_hits\": {}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t}\n\t}\n}\t",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_percentiles_open_price",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"open_price_percentiles\": {\n\t\t\t\"percentiles\": {\"field\":\"open\"}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_percentile_rank_open_price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"open_price_percentile_rank\": {\n\t\t\t\"percentile_ranks\": {\"field\":\"open\", \"values\":28.5}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_mad_acwf_percentChange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"mad_change_percent\": {\n\t\t\t\"median_absolute_deviation\": { \"field\":\"changePercent\" }\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_price_scripted_metric",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"highest_cp_cot_ratio\": {\n\t\t\t\"scripted_metric\": {\n\t\t\t\t\"init_script\":\"state.price_diff = new ArrayList()\",\n\t\t\t\t\"map_script\":\"double value = doc.changeOverTime.value==0 ? 0 :doc.changePercent.value/(doc.changeOverTime.value*100); state.price_diff.add(value)\",\n\t\t\t\t\"combine_script\":\"return Collections.max(state.price_diff)\",\n\t\t\t\t\"reduce_script\":\"return Collections.max(states)\"\n\t\t\t}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_histogram",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"acwf_histogram\": {\n\t\t\t\"histogram\": {\n\t\t\t\t\"field\": \"open\",\n\t\t\t\t\"interval\": 1,\n\t\t\t\t\"extended_bounds\": { \"min\":24, \"max\":30}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_date_histogram",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"month\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t}\n\t\t}\n\t}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_auto_interval_date_histogram",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"auto_date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"buckets\": \"4\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

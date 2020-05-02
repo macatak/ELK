@@ -1,0 +1,675 @@
+{
+	"info": {
+		"_postman_id": "be68ad94-ecb6-4673-9912-84a4f71ea715",
+		"name": "ch8_Bucket_aggs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cf_etf_hist_price_acwf_histogram",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\": {\n\t\t\"acwf_histogram\": {\n\t\t\t\"histogram\": {\n\t\t\t\t\"field\": \"open\",\n\t\t\t\t\"interval\": 1,\n\t\t\t\t\"extended_bounds\": { \"min\":24, \"max\":30}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_filter_sub_aggs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"aggs\":{\n\t\t\"avg_changePercent_at_date\": {\n\t\t\t\"filter\":{\"term\": {\"date\":\"2019-02-15\"}},\n\t\t\t\"aggs\": {\"avg_changePercent\": {\"avg\":{\"field\":\"changePercent\"}}}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_auto_interval_date_histogram",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"auto_date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"buckets\": \"4\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_date_histogram",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"month\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t}\n\t\t}\n\t}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_ranges",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"range\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\",\n\t\t\t\t\"ranges\": [{\"from\":\"2018-12-01\"},{\"to\":\"2019-04-01\"},{\"from\":\"2019-01-01\",\"to\":\"2019-02-01\"}]\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_date_ranges",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"match\": { \"symbol\": \"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_trading_days\": {\n\t\t\t\"date_range\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\",\n\t\t\t\t\"ranges\": [{\"from\":\"2018-12-01\"},{\"to\":\"2019-04-01\"},{\"from\":\"2019-01-01\",\"to\":\"2019-01-01||+1M\"}]\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_filters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\": { \"term\": {\"date\":\"2019-02-15\"}},\n\t\"aggs\":{\n\t\t\"filters_avg_changePercent\": {\n\t\t\t\"filters\":{\n\t\t\t\t\"filters\": {\n\t\t\t\t\t\"less_than_avg\": {\"range\":{\"changePercent\":{\"lt\":0.60385}}},\n\t\t\t\t\t\"greater_than_avg\":{\"range\": {\"changePercent\":{\"gte\":0.60385}}}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_terms_rating",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"aggs\":{\n\t\t\"terms_on_rating\": {\n\t\t\t\"terms\":{\n\t\t\t\t\"field\":\"rating\"\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_significant_terms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\":{\"rating\":5}},\n\t\"aggs\":{\n\t\t\"rating_vs_morningstar\":{\n\t\t\t\"significant_terms\":{\n\t\t\t\t\"field\":\"morningstar_category\"\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_significant_text",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\":{\"rating\":5}},\n\t\"aggs\":{\n\t\t\"rating_vs_fund_name\":{\n\t\t\t\"significant_text\":{\n\t\t\t\t\"field\":\"fund_name\",\n\t\t\t\t\"exclude\": [\"us\", \"p\", \"s\", \"cap\"],\n\t\t\t\t\"size\":5\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_sampler",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"aggs\": {\n\t\t\"sampling\": {\n\t\t\t\"sampler\": { \"shard_size\":150},\n\t\t\t\"aggs\": {\n\t\t\t\t\"significant_terms_category\": {\"significant_terms\": {\n\t\t\t\t\t\"field\": \"category\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_diversified_sampler_10",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"aggs\": {\n\t\t\"sampling\": {\n\t\t\t\"diversified_sampler\": {\"field\":\"family\", \"shard_size\":150,\n\t\t\t\"max_docs_per_value\" : 10},\n\t\t\t\"aggs\": {\n\t\t\t\t\"significant_terms_category\": {\n\t\t\t\t\t\"significant_terms\": {\n\t\t\t\t\t\t\"field\": \"category\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_nested_amount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\":0,\n\t\"aggs\": {\n\t\t\"per_symbol\":{\n\t\t\t\"terms\": {\"field\":\"symbol\", \"size\":3},\n\t\t\t\"aggs\":{\n\t\t\t\t\"total_dividend\": {\n\t\t\t\t\t\"nested\": {\n\t\t\t\t\t\t\"path\":\"announcement\"\n\t\t\t\t\t},\n\t\t\t\t\t\"aggs\": {\n\t\t\t\t\t\t\"total_amount\": {\"sum\": {\"field\":\"announcement.amount\"}}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_reverse_nested",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\":0,\n\t\"aggs\": {\n\t\t\"etf_category_distribution_on_dividend_type\":{\n\t\t\t\"nested\": {\n\t\t\t\t\"path\":\"announcement\"\n\t\t\t},\n\t\t\t\"aggs\":{\n\t\t\t\t\"by_dividend_type\": {\n\t\t\t\t\t\"terms\": {\"field\":\"announcement.type\"},\n\t\t\t\t\t\"aggs\": {\n\t\t\t\t\t\t\"total_by_etf_category\":{\n\t\t\t\t\t\t\t\"reverse_nested\":{},\n\t\t\t\t\t\t\t\"aggs\": {\n\t\t\t\t\t\t\t\t\"category\":{\"terms\":{\"field\": \"category\"}}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_global",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\":0,\n\t\"query\":{\"prefix\": {\"family\":\"iShares\"}},\n\t\"aggs\": {\n\t\t\"ishares_avg_rating\": {\"avg\": {\"field\":\"rating\"}},\n\t\t\"overall_avg_rating\": {\"global\":{},\n\t\t\"aggs\":{\"global_avg_rating\":{\"avg\":{\"field\":\"rating\"}}}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_missing_category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\":0,\n\t\"aggs\": {\n\t\t\"not_rated_count\": {\n\t\t\t\"missing\": {\"field\":\"rating\"}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_composite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": {\"query_string\": {\"query\": \"rating:[4 TO 5]\"}},\n\t\"size\": 0,\n\t\"aggs\": {\n\t\t\"multi_sources\": {\n\t\t\t\"composite\": {\n\t\t\t\t\"sources\": [\n\t\t\t\t\t{\"family\": {\"terms\": {\"field\":\"family\"}}},\n\t\t\t\t\t{\"rating\": {\"terms\":{\"field\":\"rating\"}}}\n\t\t\t\t],\n\t\t\t\t\"size\":5\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_adjacent_matrix",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"aggs\": {\n\t\t\"adjacency_filters\": {\n\t\t\t\"adjacency_matrix\": {\n\t\t\t\t\"filters\": {\n\t\t\t\t\t\"rating_gte_5\": {\"range\":{\"rating\":{\"gte\":5}}},\n\t\t\t\t\t\"family_prefix_A\": {\"prefix\":{\"family\":\"iShares\"}}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_join_parent_aggs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\":0,\n\t\"aggs\": {\n\t\t\"cf_etf\":{\n\t\t\t\"parent\": {\n\t\t\t\t\"type\": \"dividend\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\"count\":{\"value_count\":{\"field\":\"symbol\"}}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_dividend_join_children_aggs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"aggs\": {\n\t\t\"dividends_for_symbol\": {\n\t\t\t\"terms\": {\"field\": \"symbol\"},\n\t\t\t\"aggs\": {\"dividend\":{ \"children\": {\"type\": \"dividend\" },\n\t\t\t\"aggs\": {\"total_dividend\":{\"sum\":{\"field\":\"amount\"}}}}}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7b8923c3-1a22-4b3e-87a7-7aaac37bead0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3f3292d2-d73f-4d3c-a8e0-b67cb36d2146",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

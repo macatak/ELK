@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "a11ba1fb-1bd8-4b73-aa13-b7009ba175d1",
+		"name": "ch8_moving_aggs",
+		"description": "The purpose of this aggregation is to compute a series of average values from a subset of buckets into a specified window size from the aggregation in the previous stage.\n\nThere are five different models to compute the moving average.\nsimple, linear, ewma, holt and holt_winter\n\nThe window parameter is the size of the subset of buckets. \n\nAnother important parameter is settings , which lets us specify the parameters of the selected model . \n\nMoving average aggregation must be processed within the histogram or date_histogram aggregations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cf_etf_hist_price_acwf_moving_avg_simple",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"weekly_moving_avg\": {\n\t\t\t\t\t\t\"moving_avg\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"model\":\"simple\",\n\t\t\t\t\t\t\t\"window\":4,\n\t\t\t\t\t\t\t\"predict\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "calculate the moving average by simply averaging the values in each subset in window size."
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_avg_linear",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"weekly_moving_avg\": {\n\t\t\t\t\t\t\"moving_avg\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"model\":\"linear\",\n\t\t\t\t\t\t\t\"window\":4,\n\t\t\t\t\t\t\t\"predict\":4\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "calculate the moving average with the decaying method, which is a linear model."
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_avg_ewma",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\"weekly_moving_avg\": {\n\t\t\t\t\t\"moving_avg\":{\n\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\"model\":\"ewma\",\n\t\t\t\t\t\"settings\":{\"alpha\":0.3},\n\t\t\t\t\t\"window\":4,\n\t\t\t\t\t\"predict\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "calculate the moving average with exponentially weighted method, a single exponential smoothing model where the moving average value depends on the window size, and the alpha (0,1]. alpha parameter defaults to 0.3 . A smaller alpha value will produce more smoothing and more lag"
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_avg_holt_linear",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t},\n\t\t\t\t\"weekly_moving_avg\": {\n\t\t\t\t\t\"moving_avg\":{\n\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\"model\":\"ewma\",\n\t\t\t\t\t\t\"settings\":{\"alpha\":0.3},\n\t\t\t\t\t\t\"window\":4,\n\t\t\t\t\t\t\"predict\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "calculate the moving average with Holt's linear method, a double exponential smoothing model where moving averages depend on window size and the alpha, beta (0,1]. alpha and beta parameters default to 0.3 and 0.1 , respectively. The smaller alpha value will produce more smoothing and more lag. A smaller beta value will  emphasize long-term trends"
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_avg_holt_winters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t},\n\t\t\t\t\"weekly_moving_avg\": {\n\t\t\t\t\t\"moving_avg\":{\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\"model\":\"holt_winters\",\n\t\t\t\t\t\"settings\":{\"type\" : \"mult\",\"alpha\":0.8, \"beta\":0.3, \"gamma\":0.3, \"period\":1},\n\t\t\t\t\t\"window\":4,\n\t\t\t\t\t\"predict\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "calculate the moving average by the Holt-Winters method, a triple exponential smoothing model where the moving average depends on the window size and the alpha , beta , gamma (0,1]. alpha , beta , and gamma parameters default to 0.3 , 0.1 , and 0.3 , respectively. Holt-Winters can track seasonal aspects of data by using addition and multiplication. "
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_max",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"max_weekly_change\": {\n\t\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"script\":\"MovingFunctions.max(values)\",\n\t\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Compute the maximum value from the subset of data in each window."
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_min",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"min_weekly_change\": {\n\t\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"script\":\"MovingFunctions.min(values)\",\n\t\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Compute the minimum value from the subset of data in each window"
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_sum",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"sum_weekly_change\": {\n\t\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"script\":\"MovingFunctions.sum(values)\",\n\t\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Compute the summation value from the subset of data in each window."
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_unweightedAvg",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"unweightedAvg_weekly_change\": {\n\t\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"script\":\"MovingFunctions.unweightedAvg(values)\",\n\t\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Compute the moving average in a simple model from the subset of data in each window."
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_linearweightedAvg",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t\t},\n\t\t\t\t\t\"linearWeightedAvg_weekly_change\": {\n\t\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\t\"script\":\"MovingFunctions.linearWeightedAvg(values)\",\n\t\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_acwf_moving_fn_stdDev",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"symbol\":\"ACWF\"}},\n\t\"aggs\":{\n\t\t\"monthly_change\": {\n\t\t\t\"date_histogram\":{\n\t\t\t\t\"field\": \"date\",\n\t\t\t\t\"interval\": \"week\",\n\t\t\t\t\"format\": \"yyyy-MM-dd\"\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"weekly_change\":{\n\t\t\t\t\t\"sum\":{\"field\":\"change\"}\n\t\t\t\t},\n\t\t\t\t\"weekly_change_stdDev\": {\n\t\t\t\t\t\"moving_fn\":{\n\t\t\t\t\t\t\"buckets_path\":\"weekly_change\",\n\t\t\t\t\t\t\"script\":\"MovingFunctions.stdDev(values, MovingFunctions.unweightedAvg(values))\",\n\t\t\t\t\t\t\"window\":4\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Compute the standard deviation from the subset of data in each window"
+			},
+			"response": []
+		},
+		{
+			"name": "cf_etf_hist_price_terms_rating post_filter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"aggs\":{\n\t\t\"terms_on_rating\": {\n\t\t\t\"terms\":{\n\t\t\t\t\"field\":\"rating\"\n\t\t\t}\n\t\t}\n\t},\n\t\"post_filter\":{\n\t\t\"range\": {\n\t\t\t\"rating\": {\"gte\":5}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_hist_price",
+						"_search"
+					]
+				},
+				"description": "Typically, search results and aggregation results refer to the same query. If we want to display the search results and the aggregation results in different ways—such as applying filters to display narrowed-down search results—then we can run post_filter after the query. The post_filter parameter has no effect on aggregation."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,618 @@
+{
+	"info": {
+		"_postman_id": "c280c789-cff8-4eb5-9946-0d2e5acd1c2a",
+		"name": "ch9_ingest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "processors",
+			"item": [
+				{
+					"name": "simulate_pipeline_ad_hoc_kv_processor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"kv processor demo\",\n\t\t\"processors\":[\n\t\t\t{\"kv\": {\n\t\t\t\t\"field\": \"input_field\",\n\t\t\t\t\"field_split\":\",\",\n\t\t\t\t\"value_split\":\":\",\n\t\t\t\t\"target_field\": \"output_field\",\n\t\t\t\t\"trim_key\":\" \",\n\t\t\t\t\"trim_value\":\" \"\n\t\t\t\t}},\n\t\t\t\t{ \"remove\" : { \"field\": [\"input_field\"]}}\n\t\t\t]\n\t\t},\n\t\t\"docs\" :[\n\t\t{\"_source\": {\"input_field\":\" a:b , c:d \"}}\n\t\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_grok_processor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"grok processor demo\",\n\t\t\"processors\":[\n\t\t\t{\"grok\": {\n\t\t\t\t\"field\": \"message\",\n\t\t\t\t\"patterns\": [\"\\\\[%{TIMESTAMP_ISO8601:timestamp}\\\\]\\\\[%{LOGLEVEL:log-level}%{SPACE}\\\\]\\\\[%{JAVACLASS:class}\\\\]%{SPACE}\\\\[%{DATA:node}\\\\]%{SPACE}\\\\[%{DATA:index_doc}\\\\]%{GREEDYDATA:action}\"],\n\t\t\t\t\"ignore_missing\": true\n\t\t\t\t}},\n\t\t\t\t{\"remove\": {\"field\":[\"message\"]}}\n\t\t\t\t]\n\t\t\t},\n\t\t\t\"docs\" :[{\"_source\": {\"message\":\"[2019-06-20T00:04:58,856][INFO ][o.e.c.m.MetaDataDeleteIndexService] [WTW.local][cf_etf/RiYRsKyxTGStNcHczbUxcQ] deleting index\"}}\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_dissect_processor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"dissect processor demo\",\n\t\t\"processors\":[\n\t\t\t{\"dissect\": {\n\t\t\t\t\"field\": \"message\",\n\t\t\t\t\"pattern\":\n\t\t\t\t\"[%{timestamp}][%{log-level}][%{class}] [%{node}][%{index_doc}]%{action}\",\n\t\t\t\t\"ignore_missing\": true\n\t\t\t\t}},\n\t\t\t\t{\"remove\": {\"field\":[\"message\"]}}\n\t\t\t\t]\n\t\t\t},\n\t\t\t\"docs\" :[\n\t\t\t\t{\"_source\": {\"message\":\"[2019-06-20T00:04:58,856][INFO ][o.e.c..MetaDataDeleteIndexService] [WTW.local][cf_etf/RiYRsKyxTGStNcHczbUxcQ] deleting index\"}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_simple_conditional_execution",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"remove the rating field is the rating is equal to a single space string\",\n\t\t\"processors\":[{\n\t\t\t\"remove\": {\n\t\t\t\t\"field\": \"rating\",\n\t\t\t\t\"if\": \"ctx.rating == ' '\"\n\t\t\t}\n\t\t}]\n\t},\n\t\"docs\" :[\n\t\t{\"_source\": {\"symbol\":\"AGT\",\"fund_name\":\"iShares MSCI Argentina and Global Exposure ETF\",\"rating\":\" \",\"morningstar_category\":\"Miscellaneous Region\",\"category\":\"International\",\"family\":\"iShares\",\"market_cap\":\"mid\",\"description\" :\"The investment seeks to track the investment results of the MSCI All Argentina 25\\/50 Index (the \\\\\\\"underlying index\\\\\\\").\\\\n The fund generally will invest at least 90% of its assets in the component securities of the underlying index and in investments that have economic characteristics that are substantially identical to the component securities of the underlying index. The index is designed to measure the broad Argentina equity universe, while including a minimum number of constituents, as defined by MSCI, Inc. (the \\\\\\\"index provider\\\\\\\" or \\\\\\\"MSCI\\\\\\\"). The fund is non-diversified.\",\"exchange\":\"Cboe Global Markets EDGX\"}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "almost 30 of them",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "error_handling",
+			"item": [
+				{
+					"name": "get_document_empty_rating_from_cf_etf",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\": {\n\t\t\"match\": {\n\t\t\t\"symbol\":\"AGT\"\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_conditional_execution_null_safe_operator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"calculate the range of high and low and divide by the close price\",\n\t\t\"processors\":[\n\t\t\t{\"set\":{\n\t\t\t\t\"field\": \"new_id\",\n\t\t\t\t\"value\": \"{{id}}\",\n\t\t\t\t\"if\": \"ctx.parent?.child != null\"\n\t\t\t}}\n\t\t]\n\t},\n\t\"docs\" :[\n\t\t{\"_source\": {\"id\":1, \"parent\": {\"child\":\"value\"}}},\n\t\t{\"_source\": {\"id\":2, \"parent\": {}}},\n\t\t{\"_source\": {\"id\":3}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "define_for_market_cap__null_processor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\":\"for_market_cap_null_processor\",\n\t\"processors\":[\n\t\t{\"set\":{\n\t\t\t\"field\": \"market_cap_type\",\n\t\t\t\"value\": \"no_market_cap_ETF\"\n\t\t}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/for_market_cap_null_processor",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"for_market_cap_null_processor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "define_for_market_cap_processor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\":\"for_market_cap_processor\",\n\t\"processors\":[\n\t\t{\"set\":{\n\t\t\t\"field\": \"market_cap_type\",\n\t\t\t\"value\": \"market_cap_ETF\"\n\t\t}}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/for_market_cap_processor",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"for_market_cap_processor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "symbol_bil_market_cap_null_etf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search?q=symbol:BIL",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "symbol:BIL"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_conditional_execution_switch_case",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"calculate the range of high and low and divide by the close price\",\t\"processors\":[\n\t\t\t{\"pipeline\":{\n\t\t\t\t\"name\": \"for_market_cap_null_processor\",\n\t\t\t\t\"if\": \"ctx.market_cap == null\"}},\n\t\t\t\t{\"pipeline\":{\n\t\t\t\t\t\"name\": \"for_market_cap_processor\",\n\t\t\t\t\t\"if\": \"ctx.market_cap != null\"\n\t\t\t\t}}\n\t\t\t]\n\t\t},\n\t\t\"docs\" :[\n\t\t\t{\"_source\": {\"id\":1, \"market_cap\": null}},\n\t\t\t{\"_source\": {\"id\":2, \"market_cap\": \"large\"}}\n\t\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_hit_exception_error",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"test of hitting the exception error\",\n\t\t\"processors\":[{\n\t\t\t\"remove\": {\n\t\t\t\t\"field\": \"rating\"\n\t\t\t}\n\t\t}]\n\t},\n\t\"docs\" :[\n\t{\"_source\": {\"id\":3}}\n\t]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"_simulate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "simulate_pipeline_on_failure_hit_exception_error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "create_pipeline_range_ratio",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\":\"calculate the range of high and low and divide by the close price\",\n\t\"processors\":[\n\t\t{\n\t\t\t\"script\": {\n\t\t\t\t\"source\": \"ctx.range_ratio = (ctx.high-ctx.low)/ctx.close\"\n\t\t\t}\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/_ingest/pipeline/range_ratio",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_ingest",
+						"pipeline",
+						"range_ratio"
+					]
+				},
+				"description": "a pipeline with the range_ratio identifier by using a script processor. The range ratio is to compute the difference between the high and low price, and then set the ratio between this difference and the close price"
+			},
+			"response": []
+		},
+		{
+			"name": "get_pipeline_range_ratio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/_ingest/pipeline/range_ratio",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_ingest",
+						"pipeline",
+						"range_ratio"
+					]
+				},
+				"description": "Retrieve the ingest pipeline"
+			},
+			"response": []
+		},
+		{
+			"name": "simulate_pipeline_range_ratio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"docs\" :[\n\t\t{\"_source\": {\n\t\t\t\"date\": \"2018-12-26\",\n\t\t\t\"open\": 24.8706,\n\t\t\t\"high\": 25.6553,\n\t\t\t\"low\": 24.7117,\n\t\t\t\"close\": 25.6553,\n\t\t\t\"volume\": 422158,\n\t\t\t\"change\": 0.84425,\n\t\t\t\"changePercent\": 3.403,\n\t\t\t\"label\": \"Dec 26, 18\",\n\t\t\t\"changeOverTime\": 0,\n\t\t\t\"symbol\": \"ACWF\"\n\t\t\t}}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/_ingest/pipeline/range_ratio/_simulate",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_ingest",
+						"pipeline",
+						"range_ratio",
+						"_simulate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/_ingest/pipeline/range_ratio",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_ingest",
+						"pipeline",
+						"range_ratio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "simulate_pipeline_ad_hoc_range_ratio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"pipeline\": {\n\t\t\"description\":\"calculate the range of high and low and divide by the close price\",\n\t\t\"processors\":[{\n\t\t\t\"script\": {\n\t\t\t\t\"source\": \"ctx.range_ratio = (ctx.high-ctx.low)/ctx.close\"\n\t\t\t\t}\n\t\t\t}]\n\t\t},\n\t\t\"docs\" :[\n\t\t\t{\"_source\": {\"date\": \"2018-12-26\", \"open\": 24.8706, \"high\": 25.6553,\n\t\t\t\"low\": 24.7117, \"close\": 25.6553, \"volume\": 422158, \"unadjustedVolume\": 422158,\n\t\t\t\"change\": 0.84425, \"changePercent\": 3.403, \"vwap\": 25.2926, \"label\": \"Dec 26, 18\",\n\t\t\t\"changeOverTime\": 0, \"symbol\": \"ACWF\"}}\n\t\t\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/_ingest/pipeline/_simulate",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"_ingest",
+						"pipeline",
+						"_simulate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "index_with_pipeline_range_ratio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"date\": \"2018-12-26\",\n\t\"open\": 24.8706,\n\t\"high\": 25.6553,\n\t\"low\": 24.7117,\n\t\"close\": 25.6553,\n\t\"volume\": 422158,\n\t\"change\": 0.84425,\n\t\"changePercent\": 3.403,\n\t\"label\": \"Dec 26, 18\",\n\t\"changeOverTime\": 0,\n\t\"symbol\": \"ACWF\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_pipeline/_doc/1?pipeline=range_ratio",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_pipeline",
+						"_doc",
+						"1"
+					],
+					"query": [
+						{
+							"key": "pipeline",
+							"value": "range_ratio"
+						}
+					]
+				},
+				"description": "Execute in the pipeline: When you perform an index operation with a document, use the pipeline URL parameter with the name of the pipeline"
+			},
+			"response": []
+		},
+		{
+			"name": "get_index_with_pipeline_range_ratio_doc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.0.2.15:9200/cf_etf_pipeline/_doc/1",
+					"protocol": "http",
+					"host": [
+						"10",
+						"0",
+						"2",
+						"15"
+					],
+					"port": "9200",
+					"path": [
+						"cf_etf_pipeline",
+						"_doc",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

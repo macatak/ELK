@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "32f1c165-2149-4b87-b2e6-8ff3c7973818",
+		"name": "ch10_data_analysis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "business_analytics",
+			"item": [
+				{
+					"name": "cf_etf_morningstar_category_list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"aggs\":{\n\t\t\"get_categories\": { \"terms\": {\"field\": \"morningstar_category\",\n\t\t\"size\":100}}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						},
+						"description": "use a terms aggregation to get all Morningstar categories"
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_Diversified_Emerging_Mkts_ETFs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\":{\"match\": {\"morningstar_category\":\"Diversified Emerging Mkts\"}},\n\t\"aggs\" : {\n\t\t\"LIST_ETFs\": {\n\t\t\t\"terms\": {\"field\":\"symbol\", \"size\":16}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_prirce_Diversified_Emerging_Mkts_changes_2018_12_26",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 16,\n\t\"query\":{\n\t\t\"bool\":{\n\t\t\t\"must\": {\"range\":{\"date\":{\"gte\":\"2018-12-26\", \"lte\":\"2018-12-26\"}}},\n\t\t\t\"should\": [\n\t\t\t\t{\"term\": {\"symbol\":\"dem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgre\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgs\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dvem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ediv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"eemx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emcg\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emdv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"esge\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ewx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"pxh\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"qemm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"rfem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"spem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"uevm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"xsoe\"}}\n\t\t\t],\n\t\t\t\"minimum_should_match\":1\n\t\t}\n\t},\n\t\"aggs\" : {\n\t\t\"day_momentum\" : {\n\t\t\t\"date_histogram\" : {\n\t\t\t\t\"field\" : \"date\",\n\t\t\t\t\"interval\" : \"1d\",\n\t\t\t\t\"format\" : \"yyyy-MM-dd\",\n\t\t\t\t\"min_doc_count\": 1\t\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"cv\" : {\n\t\t\t\t\t\"scripted_metric\":{\n\t\t\t\t\t\t\"init_script\": \"state.totals=[]\",\n\t\t\t\t\t\t\"map_script\":\n\t\t\t\t\t\t\"state.totals.add(doc.change.value*doc.volume.value)\",\n\t\t\t\t\t\t\"combine_script\": \"double total=0,total_count=0; for (t in state.totals) {total += t; total_count += 1} return total/total_count\",\n\t\t\t\t\t\t\"reduce_script\": \"return states[0]\"\n\t\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Example Request - cf_etf_hist_prirce_Diversified_Emerging_Mkts_changes_daily",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\":{\n\t\t\"bool\":{\n\t\t\t\"must\": {\"range\":{\"date\":{\"gte\":\"2018-12-26\", \"lte\":\"2019-03-25\"}}},\n\t\t\t\"should\": [\n\t\t\t\t{\"term\": {\"symbol\":\"dem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgre\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgs\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dvem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ediv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"eemx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emcg\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emdv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"esge\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ewx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"pxh\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"qemm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"rfem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"spem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"uevm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"xsoe\"}}\n\t\t\t],\n\t\t\t\"minimum_should_match\":1\n\t\t}\n\t},\n\t\"aggs\" : {\n\t\t\"daily_momentum\" : {\n\t\t\t\"date_histogram\" : {\n\t\t\t\t\"field\" : \"date\",\n\t\t\t\t\"interval\" : \"1d\",\n\t\t\t\t\"format\" : \"yyyy-MM-dd\",\n\t\t\t\t\"min_doc_count\": 1\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"cv\" : {\n\t\t\t\t\t\"scripted_metric\":{\n\t\t\t\t\t\t\"init_script\": \"state.totals=[]\",\n\t\t\t\t\t\t\"map_script\":\n\t\t\t\t\t\t\"state.totals.add(doc.change.value*doc.volume.value)\",\n\t\t\t\t\t\t\"combine_script\": \"double total=0,total_count=0; for (t in state.totals) {total += t; total_count += 1} return total/total_count\",\n\t\t\t\t\t\t\"reduce_script\": \"return states[0]\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n\t\t\t",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cf_etf_hist_prirce_Diversified_Emerging_Mkts_changes_weekly",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 100,\n\t\"query\":{\n\t\t\"bool\":{\n\t\t\t\"must\": {\"range\":{\"date\":{\"gte\":\"2018-12-26\", \"lte\":\"2019-03-25\"}}},\n\t\t\t\t\t\t\"should\": [\n\t\t\t\t{\"term\": {\"symbol\":\"dem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgre\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dgs\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"dvem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ediv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"eemx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emcg\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"emdv\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"esge\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"ewx\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"pxh\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"qemm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"rfem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"spem\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"uevm\"}},\n\t\t\t\t{\"term\": {\"symbol\":\"xsoe\"}}\n\t\t\t],\n\t\t\t\"minimum_should_match\":1\n\t\t}\n\t},\n\t\"aggs\" : {\n\t\t\"weekly_momentum\" : {\n\t\t\t\"date_histogram\" : {\n\t\t\t\t\"field\" : \"date\",\n\t\t\t\t\"interval\" : \"1w\",\n\t\t\t\t\"format\" : \"yyyy-MM-dd\",\n\t\t\t\t\"min_doc_count\": 1\n\t\t},\n\t\"aggs\": {\"cv\" : {\n\t\t\"scripted_metric\":{\n\t\t\t\"init_script\": \"state.totals=[]\",\n\t\t\t\"map_script\": \"state.totals.add(doc.change.value*doc.volume.value)\",\n\t\t\t\"combine_script\": \"double total=0, total_count=0;for (t in state.totals) {total += t; total_count += 1} return total/total_count\",\"reduce_script\": \"return states[0]\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "operational_analytics",
+			"item": [
+				{
+					"name": "cf_etf_hist_prirce_Bollinger_band_rfem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"size\": 0,\n\t\"query\":{\n\t\t\"bool\":{\n\t\t\t\"must\": [\n\t\t\t\t{\"range\":{\"date\":{\"gte\":\"2018-12-26\", \"lte\":\"2019-03-25\"}}},\n\t\t\t\t{\"term\": {\"symbol\":\"rfem\"}}\n\t\t\t]\n\t\t}\n\t},\n\t\"aggs\" : {\n\t\t\"Bollinger_band\" : {\n\t\t\t\"date_histogram\" : {\n\t\t\t\t\"field\" : \"date\",\n\t\t\t\t\"interval\" : \"1d\",\n\t\t\t\t\"format\" : \"yyyy-MM-dd\",\n\t\t\t\t\"min_doc_count\": 1\n\t\t\t},\n\t\t\t\"aggs\": {\n\t\t\t\t\"tp\" : {\n\t\t\t\t\t\"scripted_metric\":{\n\t\t\t\t\t\t\"init_script\": \"state.totals=[]\",\n\t\t\t\t\t\t\"map_script\": \"state.totals.add((doc.high.value+doc.low.value+doc.close.value)/3)\",\n\t\t\t\t\t\t\"combine_script\": \"double total=0; for (t in state.totals) {total += t return total\",\n\t\t\t\t\t\t\"reduce_script\": \"return states[0]\"\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\"20_trading_days_moving_avg\": {\n\t\t\t\t\t\"moving_avg\" : {\"model\": \"simple\", \"window\":20, \"buckets_path\":\"tp.value\"}\n\t\t\t\t},\n\t\t\t\t\"20_trading_days_stdDev\": {\n\t\t\t\t\t\"moving_fn\": {\"script\":\"MovingFunctions.stdDev(values, MovingFunctions.unweightedAvg(values))\", \"window\":20, \"buckets_path\":\"tp.value\"}\n\t\t\t\t},\n\t\t\t\t\"BBU\": {\n\t\t\t\t\t\"bucket_script\": {\n\t\t\t\t\t\t\"buckets_path\": {\n\t\t\t\t\t\t\t\"SMA\": \"20_trading_days_moving_avg\",\n\t\t\t\t\t\t\t\"StdDev\": \"20_trading_days_stdDev\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"script\": \"params.SMA + 2 * params.StdDev\"\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\"BBL\": {\n\t\t\t\t\t\"bucket_script\": {\n\t\t\t\t\t\t\"buckets_path\": {\n\t\t\t\t\t\t\t\"SMA\": \"20_trading_days_moving_avg\",\n\t\t\t\t\t\t\t\"StdDev\": \"20_trading_days_stdDev\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"script\": \"params.SMA - 2 * params.StdDev\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.0.2.15:9200/cf_etf_hist_price/_search",
+							"protocol": "http",
+							"host": [
+								"10",
+								"0",
+								"2",
+								"15"
+							],
+							"port": "9200",
+							"path": [
+								"cf_etf_hist_price",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

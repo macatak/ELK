@@ -1,0 +1,32 @@
+Chapter 12
+Python
+
+Some of the methods can be called directly from the low-level client, and other methods can be called indirectly from the attributes of the low-level client. In addition, the elasticsearch.helpers module is provided to help you process bulk data
+
+info
+https://github.com/elastic/elasticsearch-py/blob/master/elasticsearch/client/indices.py
+
+You can print the whole response object with the raw data by using the to_dict() method. You can use the response object as a key and use a dot to access its attribute value.
+
+The Python high-level Elasticsearch library
+
+The elasticsearch-dsl-py package provides a high-level library that is built on top of the low-level client. You can use the low-level client.
+It is highly recommended to use the create_connection() method from the elasticsearch_dsl.connections.py module.
+
+Each wrapper class has its initialization and provides methods to perform the request. You have to study the elasticsearch-dsl document first, and then you'll know how it works.
+
+info
+https://github.com/elastic/elasticsearch-dsl-py/blob/master/elasticsearch_dsl/connections.py
+https://github.com/elastic/elasticsearch-dsl-py/blob/master/elasticsearch_dsl/search.py
+https://github.com/elastic/elasticsearch-dsl-py/blob/master/elasticsearch_dsl/query.py
+
+
+After the Search class is initialized with a connection or a low-level client, you can call the query method to set up the query, or set the query value to the query created by the Q() method. 
+
+To construct a query with the Search object, there are three ways to do it. 
+	The first one is to use the query method.
+	The second one is to use the Q() method. 
+	The third one is to use the provided class of the query type.
+
+Once the Search object is constructed and initialized with the query, you can call the execute method to perform the search request.
+

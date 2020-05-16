@@ -1,0 +1,33 @@
+chapter 13
+elk overview
+
+Docker
+
+docker pull docker.elastic.co/beats/filebeat:7.4.2
+
+docker image ls |grep elastic
+
+setup a network
+	docker network create es_basic
+	
+docker run -d --net es_basic --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.4.2
+
+docker run -d --name kibana --net es_basic --rm -p 5601:5601 docker.elastic.co/kibana/kibana:7.4.2
+
+docker run --name=logstash --group-add adm --net es_basic --rm -it -v "`pwd`/pipeline/:/usr/share/logstash/pipeline" -v /var/log/:/tmp/log -e xpack.monitoring.enabled=false docker.elastic.co/logstash/logstash:7.4.2 
+
+docker run --name=filebeat --group-add adm --net es_basic -v /var/log:/var/log -v "`pwd`/filebeat.yml:/usr/share/filebeat/filebeat.yml" docker.elastic.co/beats/filebeat:7.4.2
+
+when the Elasticsearch container is created, the error shown here occurs:
+	docker: Error response from daemon: Conflict. The container name "/elasticsearch" is already in use by container "id", where "id" is a long hexadecimal string. You have to remove (or rename) that container to be able to reuse that name and you have to remove the container.
+	
+If this happens, use these commands to stop the container, remove it, and re-run docker_run_elasticsearch :
+docker container stop id
+docker container rm id
+
+docker container ls
+	the Elasticsearch Docker container's ID is 802d6f50ef0. This ID is an identifier of the container for all related commands.
+	
+curl localhost:9200 -XGET
+
+	

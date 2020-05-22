@@ -1,0 +1,90 @@
+Chap-17 Spark and Elasticsearch for Real-Time Analytics
+
+Elasticsearch for Apache Hadoop (ES-Hadoop). The ES-Hadoop feature contains two major areas. 
+
+The first area is the integration of Elasticsearch with Hadoop distributed computing environments, such as Apache Spark, Apache Storm, and Hive. 
+
+The second area is the integration of Elasticsearch to use the Hadoop filesystem as the backend storage so that you can index Hadoop data into the Elastic Stack to take advantage of the search engine and visualization.
+
+Apache Spark is an open source processing engine for analytics, machine learning, and overcoming a range of data challenges.
+
+We can import Hadoop Distributed
+File System (HDFS) data to Elasticsearch for search and analysis, and export the Elasticsearch data to HDFS for snapshot and restore
+
+In short, we can think of ES-Hadoop as a data bridge between Elasticsearch and the Hadoop big data ecosystem, through which it provides real-time, or near-real-time, interactive analysis.
+
+Components
+	HDFS - HDFS is an individual filesystem. It can manage a huge amount of data that may span hundreds of machines. When you refer to a file path, the actual data may be stored on many different machines. However, you don't need to know where the data is located.
+
+	MapReduce - MapReduce is the first-generation computing engine for HDFS. Although HDFS can manage data located on different machines, the batch data processing is too slow.
+
+	Spark - Spark is the second-generation computing engine for HDFS. Spark is much faster than MapReduce and can perform real-time data analysis when running in memory, especially in machine learning applications such as online product recommendations, network security analysis, and more.
+
+	Storm - Storm is another distributed computing engine working with Hadoop. Unlike MapReduce and Spark, it does not collect data and store it. Instead, it receives streaming data over the network, processes it in real time, and then returns the result directly.
+
+	Hive - The Hive software project was developed to provide a SQL-like query language called HiveQL. It transparently converts SQL queries to MapReduce programs.
+
+	Pig - It is a high-level scripting language for expressing data analysis programs. It consists of a compiler that converts the scripts to MapReduce programs.
+
+	Cascading - Cascading is a software abstraction layer for Apache Hadoop. It allows you to create and execute data processing workflows on Hadoop by using JVM-based languages such as Java. In fact, it hides the underlying complexity of MapReduce jobs.
+
+	YARN - Yet Another Resource Negotiator (YARN) is a central management system that supports resource management and job scheduling/monitoring management for Hadoop 2.0 or higher. The YARN framework gave Hadoop the ability to run non-MapReduce jobs.
+
+	
+Apache Spark support
+Apache Spark is one of the most popular big data tools. It is a second-generation computing engine that works with Hadoop as an alternative to MapReduce. It provides in-memory computing capabilities to achieve high-performance analytics. The major components in Spark include Spark SQL, Spark Streaming, SparkR, Machine Learning Library (MLlib), and GraphX. Spark is built on the Scala programming language and also supports APIs for Java, Python, and R.
+
+Batch processing - Usually, this applies to blocks of data that have been stored for a period of time and it takes a long time to complete the process. Spark handles all the data in memory and only interacts with the storage layer to load the data and retain the final result. All intermediate results are managed in memory. To implement in-memory batch processing, Spark uses a data model called Resilient Distributed Datasets (RDDs) to represent a collection of data and process the data in memory. The operation on an RDD produces a new RDD. Each RDD can track its family tree through its parent RDD and, eventually, it can trace back to the data on disk.
+
+Stream processing: This allows us to process data in real time as it arrives and quickly detect conditions within a short time after receiving the data. This is ideal to use with analysis tools in order to get results as soon as the data comes in. Stream processing is provided by Spark Streaming, which is based on a concept called micro-batches. This strategy is designed to treat live input data streams as a series of very small batches, which are then processed by the Spark engine to generate the final stream of results in batches. In fact, this method works quite well, but it cannot compare with the real stream processing framework.
+
+
+Setup
+sudo easy_install virtualenv==15.0.1
+
+run
+1. Let's name the folder eshadoop and run the command in the code block:
+	virtualenv -p python3.6 eshadoop
+2. Run the following command and take a look at the eshadoop folder you've created:
+	ls eshadoop
+3. Run the source command to use the virtual environment built for eshadoop :
+	source eshadoop/bin/activate
+	out - (eshadoop) $
+4. Run this command to go to the working directory:
+	cd eshadoop
+5. Create a text file named requirements.txt with the content described:
+#ES-Hadoop 7.0
+pyspark==2.4.3
+pandas==0.24.2
+matplotlib==3.1.0
+numpy==1.16.4
+6. Run the install command to download the required third-party libraries:
+	pip install -r requirements.txt
+7 Go to the jar folder of the site-packages folder and run the wget command to
+download the elasticsearch-spark JAR file:
+	cd lib/python3.6/site-packages/pyspark/jars
+	wget https://search.maven.org/remotecontent?filepath=org/elasticsearch/elasticsearch-spark-20_2.11/7.6.2/elasticsearch-spark-20_2.11-7.6.2.jar
+8. Go back to the eshadoop folder, make an src folder, and put the source file into the folder:
+	mkdir src
+	cd src
+	
+No idea why, but after all the the book says go to the code download and use their code
+commands
+	source bin/activate
+	export PYTHONPATH=.:../lib/python3.6/site-packages:$PYTHONPATH
+	cd src
+	python com/example/spark/run.py
+		goes 'boom'
+		
+Docker approach
+	docker pull wtwong316/waitakwong:eshadoop
+Get the container ID
+	docker images | grep wtwong
+		wtwong316/waitakwong                            eshadoop            42141517aefa  	
+	list the networks
+		docker network ls
+	docker run --rm --network es_basic --name eshadoop -it 42141517aefa
+	
+	
+
+In the next section, we will focus on int

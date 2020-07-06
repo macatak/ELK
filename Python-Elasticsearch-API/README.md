@@ -12,6 +12,9 @@ API link _https://elasticsearch-py.readthedocs.io/en/master/api.html_
 ### Basic Search
 - Some [Basic Search operations](https://github.com/macatak/ELK/blob/master/Python-Elasticsearch-API/dsl_search_101.ipynb). Shows how to access the values returned
 
+### Range Search
+- Some [Range Search operations](https://github.com/macatak/ELK/blob/master/Python-Elasticsearch-API/range_101.ipynb). A basic rsearch using a query and range
+
 ## Low level API
 
 ### Setup

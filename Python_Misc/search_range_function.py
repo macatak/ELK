@@ -2,8 +2,6 @@
 
 '''
 search over a range as a function
-winlogbeat* event.code 4769 now-1d now
-
 '''
 
 # imports

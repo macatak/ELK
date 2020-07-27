@@ -1,7 +1,6 @@
-# Level 1 text
-Miscellaneous Python scripts for ELK
+# Miscellaneous Python scripts for ELK
 
-## Level 2 text
+## Search an index for a value over a period of time
 [search_range_function](https://github.com/macatak/ELK/blob/master/Python_Misc/search_range_function.py)
 search over a time range as a function and returns a count of the numer of hits 
 Requires the following:  

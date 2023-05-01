@@ -1,0 +1,29 @@
+sudo /usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive
+
+bikeride
+Changed password for user [apm_system]
+Changed password for user [kibana_system]
+Changed password for user [kibana]
+Changed password for user [logstash_system]
+Changed password for user [beats_system]
+Changed password for user [remote_monitoring_user]
+Changed password for user [elastic]
+
+Edit kibana yml 
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "bikeride" 
+# for security privs
+xpack.encryptedSavedObjects.encryptionKey: "whatdoyougetwhenyoumultiply6by9_42"
+# disable TLS for fleet
+xpack.fleet.agents.tlsCheckDisabled: true
+
+# bin/elasticsearch-reset-password -u elastic
+
+
+sudo /usr/share/kibana/bin/kibana-keystore add elasticsearch.username
+Enter value for elasticsearch.username: kibana_system
+sudo /usr/share/kibana/bin/kibana-keystore add elasticsearch.password
+Enter value for elasticsearch.password: bikeride
+
+
+sudo firewall-cmd --add-port=5601/tcp --add-port=9200/tcp --add-port=8220/tcp --permanent
